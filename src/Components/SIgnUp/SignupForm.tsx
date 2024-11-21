@@ -1,9 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
-import Button from '../../utils/Button';
 import styles from './SignUpForm.module.css';
 import { useState } from 'react';
 import axios from 'axios';
 import { isRejected } from '@reduxjs/toolkit';
+import { TextField } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
+import PasswordEye from '../../utils/PasswordEye';
 
 interface Data {
   username: string;
@@ -16,11 +18,16 @@ function SignupForm() {
   const [errors, setErrors] = useState<{ field: string; message: string }[]>(
     []
   );
+  const [isShown, setIsShown] = useState(false);
   const [formData, setFormData] = useState<Data>({
     username: '',
     email: '',
     password: '',
   });
+  const [loading, setLoading] = useState(false);
+  const changePasswordType = () => {
+    setIsShown(!isShown);
+  };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
     e.preventDefault();
@@ -76,6 +83,7 @@ function SignupForm() {
     e.preventDefault();
     const errors = getErrors(formData);
     setErrors(errors);
+    setLoading(true);
 
     try {
       if (errors.length === 0) {
@@ -94,10 +102,14 @@ function SignupForm() {
         if (res.status !== 200) {
           return alert('Something went wrong.');
         }
+        setLoading(false);
         navigate('/');
+      } else {
+        setLoading(false);
       }
     } catch (error) {
       console.error('Error creating user:', error);
+      setLoading(false);
     }
   };
   const getErrorMessage = (field: string) =>
@@ -112,14 +124,17 @@ function SignupForm() {
 
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-10 justify-center align-middle">
-            <div className="w-[100%] flex flex-col gap-12">
+            <div className="w-[100%] flex flex-col gap-6">
               <div className={styles.inputsection}>
-                <input
+                <TextField
+                  id="outlined-basic"
                   type="text"
-                  placeholder="Username"
+                  label="Username"
+                  variant="outlined"
                   value={formData.username}
-                  onChange={(e) => onChange(e, 'username')}
-                  className={styles.input}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange(e, 'username')
+                  }
                 />
                 {getErrorMessage('username') && (
                   <p className={styles.errorMessage}>
@@ -128,12 +143,15 @@ function SignupForm() {
                 )}
               </div>
               <div className={styles.inputsection}>
-                <input
+                <TextField
+                  id="outlined-basic"
                   type="email"
-                  placeholder="Email"
+                  label="Email"
+                  variant="outlined"
                   value={formData.email}
-                  onChange={(e) => onChange(e, 'email')}
-                  className={styles.input}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange(e, 'email')
+                  }
                 />
                 {getErrorMessage('email') && (
                   <p className={styles.errorMessage}>
@@ -142,13 +160,23 @@ function SignupForm() {
                 )}
               </div>
               <div className={styles.inputsection}>
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={formData.password}
-                  onChange={(e) => onChange(e, 'password')}
-                  className={styles.input}
-                />
+                <div className="w-full relative">
+                  <TextField
+                    id="outlined-basic"
+                    type={isShown ? 'text' : 'password'}
+                    label="Password"
+                    variant="outlined"
+                    value={formData.password}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onChange(e, 'password')
+                    }
+                    className="w-full"
+                  />
+                  <PasswordEye
+                    changePasswordType={changePasswordType}
+                    isShown={isShown}
+                  />
+                </div>
                 {getErrorMessage('password') && (
                   <p className={styles.errorMessage}>
                     {getErrorMessage('password')}
@@ -156,11 +184,19 @@ function SignupForm() {
                 )}
               </div>
             </div>
-            <Button>Sign up</Button>
+            <LoadingButton
+              size="small"
+              loading={loading}
+              loadingIndicator="Loading…"
+              variant="contained"
+              type="submit"
+            >
+              Sign up
+            </LoadingButton>
             <div>
               <p className="mt-[-20px]">
                 Already have an account?
-                <Link to="/login" className="text-blue-700">
+                <Link to="/" className="text-blue-700">
                   SignIn
                 </Link>
               </p>

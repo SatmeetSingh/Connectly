@@ -1,34 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-nav {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 55px;
-  /* background: #2980b9; */
+.largenav {
+  width: auto;
+  height: auto;
+  padding: 20px 60px 30px 5px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 1);
-}
-
-.nav {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 55px;
   background-color: rgba(255, 255, 255, 1);
 }
 
 nav .navbar {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  /* justify-content: space-between; */
   height: 100%;
   max-width: 90%;
   /* background: #2980b9; */
@@ -37,6 +18,7 @@ nav .navbar {
 
 nav .navbar .leftnavbar {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   height: 100%;
@@ -45,6 +27,7 @@ nav .navbar .leftnavbar {
 
 nav .navbar .rightnavbar {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   height: 100%;
@@ -59,6 +42,9 @@ nav .navbar .logo a {
 }
 nav .navbar .menu {
   display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  gap: 20px;
 }
 .navbar .menu li {
   list-style: none;
@@ -75,6 +61,7 @@ section {
   height: 100vh;
   width: 100%;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   color: #96c7e8;
   font-size: 70px;
@@ -109,7 +96,14 @@ section {
   box-shadow: rgba(0, 0, 0, 0.15);
 }
 
-/* small nav */
+.nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 55px;
+  background-color: rgba(255, 255, 255, 1);
+}
 
 .smallnav {
   position: fixed;
@@ -122,13 +116,13 @@ section {
   background-color: rgba(255, 255, 255, 1);
 }
 
-.navbar1 {
+.smallnav .navbar1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  max-width: 90%;
-  margin: auto;
+  max-width: 100%;
+  /* margin: auto; */
 }
 
 .navbar1 .smallmenu {
@@ -139,6 +133,7 @@ section {
 }
 
 .smallnav .navbar1 .leftnavbar .smallmenu li {
+  cursor: pointer;
   list-style: none;
   margin: 0 15px;
 }

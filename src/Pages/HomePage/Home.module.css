@@ -1,3 +1,28 @@
-.posts {
-  margin-top: 100px;
+.home {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.suggestions {
+  display: none;
+}
+
+@media (max-width: 750px) {
+  .posts {
+    width: 100%;
+    margin-top: 100px;
+    place-items: center;
+  }
+}
+
+@media (min-width: 750px) {
+  .posts {
+    height: 100%;
+    place-items: center;
+    flex: 2;
+  }
+  .suggestions {
+    flex: 1;
+  }
 }

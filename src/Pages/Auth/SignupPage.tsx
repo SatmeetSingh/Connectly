@@ -1,6 +1,6 @@
 import SignupForm from '../../Components/SIgnUp/SignupForm';
 
-function LogoutPage() {
+function SignOutPage() {
   return (
     <div className="h-[100%]">
       <SignupForm />
@@ -8,4 +8,4 @@ function LogoutPage() {
   );
 }
 
-export default LogoutPage;
+export default SignOutPage;
