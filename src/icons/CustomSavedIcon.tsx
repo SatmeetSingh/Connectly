@@ -6,8 +6,6 @@ const IconWithBorder = () => {
       style={{
         display: 'inline-block',
         position: 'relative',
-        width: '50px',
-        height: '50px',
       }}
     >
       {/* SVG with border */}
@@ -34,7 +32,7 @@ const IconWithBorder = () => {
       </svg>
 
       {/* Icon placed over the SVG container */}
-      <div style={{ position: 'absolute', top: '5px', left: '2px' }}>
+      <div style={{ position: 'absolute', top: '4px', left: '2px' }}>
         <LuUser2 size={20} />
       </div>
     </div>

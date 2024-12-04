@@ -12,6 +12,7 @@ interface LoginData {
 }
 
 interface state {
+  isAuthenticated: boolean;
   formData: Data;
   loginData: LoginData;
   errors: { field: string; message: string }[];
@@ -21,6 +22,7 @@ interface state {
 // export const SignUpUser = As;
 
 const initialState: state = {
+  isAuthenticated: false,
   formData: {
     username: '',
     email: '',
@@ -31,15 +33,29 @@ const initialState: state = {
     password: '',
   },
   errors: [],
-  isShown: true,
+  isShown: false,
 };
 
 export const AuthSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setIsAuthenticated: (state, action) => {
+      state.isAuthenticated = action.payload;
+    },
+    setFormData: (state, action) => {
+      state.formData = action.payload;
+    },
+    setIsShown: (state, action) => {
+      state.isShown = action.payload;
+    },
+    setErrors: (state, action) => {
+      state.errors = action.payload;
+    },
+  },
 });
 
-export const {} = AuthSlice.actions;
+export const { setFormData, setIsAuthenticated, setIsShown, setErrors } =
+  AuthSlice.actions;
 
 export default AuthSlice.reducer;

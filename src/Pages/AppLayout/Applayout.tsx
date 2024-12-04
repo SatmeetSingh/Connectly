@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Home } from '../HomePage/Home';
 import NavBar from '../../Components/Navbar/Navbar';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 
 export default function () {
   return (

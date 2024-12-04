@@ -10,13 +10,13 @@ const ProfileNav: React.FC<Props> = ({ username }) => {
   return (
     <nav className={styles.profilenav}>
       <div className={styles.profilenavleft}>
-        <Link to="/home">
+        <Link to="">
           <FaChevronLeft size={25} />
         </Link>
         <div>{username}</div>
       </div>
       <div>
-        <Link to="/settings" className="flex gap-2">
+        <Link to="settings" className="flex gap-2">
           <BsThreeDotsVertical size={25} />
         </Link>
       </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ProfileNav from './ProfileNav';
 import styles from './profile.module.css';
 import PostGrid from './PostGrid';
@@ -7,8 +7,10 @@ import CustomBorderIcon from '../../icons/CustomBorderIcon';
 import ReelsIcon from '../../icons/CustomReelsIcon';
 import SavedIcon from '../../icons/CustomSavedIcon';
 import { LuUserPlus2 } from 'react-icons/lu';
-import { FaPlus } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
+import ProfileHeader from './ProfileHeader';
+import { getUserbyId } from '../../Api/api';
+import { User } from './UserInterface';
 
 const user = {
   username: 'Satmeet_Singh',
@@ -28,61 +30,66 @@ const user = {
   ],
 };
 
+const userdata = {
+  id: '',
+  username: '',
+  email: '',
+  password: '',
+  name: '',
+  profilePicture: '',
+  bio: '',
+  gender: '',
+  createdDate: '',
+  updatedDate: null,
+  followersCount: 0,
+  followingCount: 0,
+  isActive: true,
+  posts: [],
+  comments: [],
+  likes: [],
+  following: [],
+  followers: [],
+};
+
 export default function Profile() {
+  const [userData, setUserData] = useState<User>(userdata);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getUserbyId();
+      setUserData(data);
+    };
+    getData();
+  }, []);
+
+  console.log(userData.name);
+
   return (
     <div className={styles.profilePage}>
-      <ProfileNav username={user.username} />
+      <ProfileNav username={userData.username} />
       <div className={styles.profileHeader}>
-        <div className="flex flex-col self-center">
-          <div className="flex self-center relative min-[]">
-            <img
-              src={user.profilePicture}
-              alt={`${user.username}'s profile`}
-              className={styles.profilePicture}
-            />
-            <div className={styles.addPhoto}>
-              <FaPlus color="white" size={13} />
-            </div>
-          </div>
-          <h2 className={styles.username}>{user.Name}</h2>
-        </div>
-
-        <div className={styles.profileInfo}>
-          <div className={styles.stats}>
-            <span>
-              {user.posts} <p>posts</p>
-            </span>
-            <span>
-              {user.followers}
-              <p>followers</p>
-            </span>
-            <span>
-              {user.following}
-              <p>following</p>
-            </span>
-          </div>
-        </div>
+        <ProfileHeader user={userData} />
         <p className={styles.bio}>{user.bio}</p>
-        <div className="flex  justify-between w-[95%] mt-4">
-          <Button variant="contained" size="small">
-            <Link to="/editProfile">Edit Profile</Link>
+        <div className="grid grid-flow-col w-[100%] gap-2 mt-3">
+          <Button variant="contained" size="small" className="col-span-10">
+            <Link to="editProfile">Edit Profile</Link>
           </Button>
-          <Button variant="outlined" size="small">
+          <Button variant="outlined" size="small" className="col-span-10">
             Share Profile
           </Button>
-          <Button variant="outlined" size="small">
+          <Button variant="outlined" size="small" className="col-span-1 ">
             <LuUserPlus2 size={20} />
           </Button>
         </div>
       </div>
-      <div className="flex justify-between ">
-        <div className="flex justify-center align-middle flex-1">
+      <div className={styles.customicons}>
+        <div className={styles.cusIcon}>
           <CustomBorderIcon />
         </div>
-        <div className="flex justify-center align-middle flex-1">
+        <div className={styles.cusIcon}>
           <ReelsIcon />
         </div>
-        <div className="flex justify-center align-middle flex-1">
+        <div className={`${styles.cusIcon} `}>
           <SavedIcon />
         </div>
       </div>

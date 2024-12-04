@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import { LiaHomeSolid } from 'react-icons/lia';
 import { IoMdNotificationsOutline } from 'react-icons/io';
-import { FaRegComments, FaHeart } from 'react-icons/fa6';
+import { FaRegComments } from 'react-icons/fa6';
 import { TfiSearch } from 'react-icons/tfi';
 import { useEffect, useState } from 'react';
 import { CgProfile } from 'react-icons/cg';
 import { ImCompass2 } from 'react-icons/im';
 import { RxVideo } from 'react-icons/rx';
 import { AiOutlineMessage, AiOutlineVideoCameraAdd } from 'react-icons/ai';
+import { CiHeart } from 'react-icons/ci';
 import { IoReorderThree } from 'react-icons/io5';
 import ReelsIcon from '../../icons/CustomReelsIcon';
+import CustonCreateIcon from '../../icons/CustonCreateIcon';
 
 export default function NavBar() {
   const [isWidth, setIsWidth] = useState(window.innerWidth <= 750);
@@ -37,16 +39,16 @@ export function LargeNavbar() {
         </div>
         <ul className={styles.menu}>
           <li>
-            <Link to="/home" className="flex gap-2">
+            <Link to="" className="flex gap-2">
               <LiaHomeSolid size={25} />
               <span>Home</span>
             </Link>
           </li>
           <li>
-            <a href="#Search" className="flex gap-2">
+            <Link to="popular" className="flex gap-2">
               <TfiSearch size={25} />
               <span>Search</span>
-            </a>
+            </Link>
           </li>
           <li>
             <a href="#Discover" className="flex gap-2">
@@ -82,7 +84,7 @@ export function LargeNavbar() {
             </a>
           </li>
           <li>
-            <Link to="/profile" className="flex gap-2">
+            <Link to="profile" className="flex gap-2">
               <CgProfile size={25} />
               <span>Profile</span>
             </Link>
@@ -105,22 +107,24 @@ export function SmallNavBar() {
       <div className={styles.navbar1}>
         <ul className={styles.smallmenu}>
           <li>
-            <Link to="/home">
+            <Link to="">
               <LiaHomeSolid size={30} />
             </Link>
           </li>
           <li>
-            <TfiSearch size={30} />
+            <Link to="popular">
+              <TfiSearch size={27} />
+            </Link>
           </li>
           <li>
-            <FaHeart size={30} />
+            <CustonCreateIcon />
           </li>
           <li>
             <ReelsIcon />
           </li>
           <li>
-            <Link to="/profile">
-              <CgProfile size={30} />
+            <Link to="profile">
+              <CgProfile size={27} />
             </Link>
           </li>
         </ul>
@@ -134,14 +138,14 @@ export const AboveNavBar = () => {
     <div className={styles.nav}>
       <ul className={styles.box}>
         <li>
-          <TfiSearch size={30} />
-        </li>
-        <li>
           <div className={styles.logo1}>
             <a href="#">Connecty</a>
           </div>
         </li>
-        <li>
+        <li className="flex align-middle gap-5 ">
+          <Link to="notification">
+            <CiHeart size={30} />
+          </Link>
           <FaRegComments size={30} />
         </li>
       </ul>

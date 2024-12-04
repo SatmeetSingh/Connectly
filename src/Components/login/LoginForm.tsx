@@ -1,7 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import styles from './loginForm.module.css';
 import { FcGoogle } from 'react-icons/fc';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { TextField, Checkbox, FormControl } from '@mui/material';
@@ -12,9 +12,11 @@ interface LoginData {
   Email: string;
   Password: string;
 }
+interface loginFormProps {}
 
-function LoginForm() {
+const LoginForm: React.FC<loginFormProps> = () => {
   const navigate = useNavigate();
+  // const { userId } = useParams();
   const [loading, setLoading] = useState(false);
   const [loginData, setLoginData] = useState({
     Email: '',
@@ -74,6 +76,7 @@ function LoginForm() {
     e.preventDefault();
     const errors = getErrors(loginData);
     setErrors(errors);
+    setLoading(true);
 
     try {
       if (errors.length === 0) {
@@ -82,9 +85,17 @@ function LoginForm() {
           `https://localhost:7272/api/users/login`,
           loginData
         );
-        console.table(res.data);
-
-        navigate('/home');
+        alert('login successful');
+        if (res.status === 200) {
+          localStorage.setItem('loggedIn', 'true');
+          if (res.data?.user?.id) {
+            const userId = res.data.user.id;
+            localStorage.setItem('userId', userId);
+            navigate(`/${userId}`);
+          } else {
+            console.error('Login failed: No user ID returned');
+          }
+        }
       } else {
         setLoginData({
           Email: '',
@@ -158,7 +169,6 @@ function LoginForm() {
               control={<Checkbox defaultChecked />}
               label="Remember Me"
             />
-
             <LoadingButton
               size="small"
               loading={loading}
@@ -172,7 +182,6 @@ function LoginForm() {
               <p>
                 Don't have an account?
                 <Link to="/signup" className="text-blue-700">
-                  {' '}
                   Sign up
                 </Link>
               </p>
@@ -196,6 +205,6 @@ function LoginForm() {
       </div>
     </div>
   );
-}
+};
 
 export default LoginForm;

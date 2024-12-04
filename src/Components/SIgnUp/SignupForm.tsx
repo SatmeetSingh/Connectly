@@ -2,10 +2,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './SignUpForm.module.css';
 import { useState } from 'react';
 import axios from 'axios';
-import { isRejected } from '@reduxjs/toolkit';
+// import { isRejected } from '@reduxjs/toolkit';
 import { TextField } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PasswordEye from '../../utils/PasswordEye';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setFormData,
+  setIsAuthenticated,
+  setIsShown,
+  setErrors,
+} from '../../Pages/Auth/AuthSlice';
+import { RootState } from '../../store';
 
 interface Data {
   username: string;
@@ -15,26 +23,24 @@ interface Data {
 
 function SignupForm() {
   const navigate = useNavigate();
-  const [errors, setErrors] = useState<{ field: string; message: string }[]>(
-    []
+  const dispatch = useDispatch();
+  const { formData, isAuthenticated, isShown, errors } = useSelector(
+    (state: RootState) => state.auth
   );
-  const [isShown, setIsShown] = useState(false);
-  const [formData, setFormData] = useState<Data>({
-    username: '',
-    email: '',
-    password: '',
-  });
+
   const [loading, setLoading] = useState(false);
   const changePasswordType = () => {
-    setIsShown(!isShown);
+    dispatch(setIsShown(!isShown));
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
     e.preventDefault();
-    setFormData({
-      ...formData,
-      [type]: e.target.value,
-    });
+    dispatch(
+      setFormData({
+        ...formData,
+        [type]: e.target.value,
+      })
+    );
   };
 
   const getErrors = (data: Data) => {
@@ -82,7 +88,7 @@ function SignupForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const errors = getErrors(formData);
-    setErrors(errors);
+    dispatch(setErrors(errors));
     setLoading(true);
 
     try {

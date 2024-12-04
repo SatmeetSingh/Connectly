@@ -30,8 +30,8 @@
 }
 
 .profilePicture {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   margin-right: 20px;
 }
@@ -46,8 +46,8 @@
   border-radius: 50%;
   border: 2px solid white;
   position: absolute;
+  right: 17%;
   bottom: 10%;
-  right: 5%;
 }
 
 .profileInfo {
@@ -74,6 +74,11 @@
   color: #666;
 }
 
+.fix {
+  display: flex;
+  align-items: center;
+}
+
 /* Posts Grid Section */
 .postsGrid {
   display: grid;
@@ -92,6 +97,18 @@
   object-fit: cover;
 }
 
+.customicons {
+  display: flex;
+  justify-content: center;
+}
+.customicons .cusIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  margin-bottom: 20px;
+}
+
 /* Media Queries for Responsiveness */
 
 /* For smaller screens (phones) */
@@ -99,11 +116,22 @@
   .profilePage {
     padding: 10px;
   }
+  .addPhoto {
+    position: absolute;
+    right: 5%;
+    bottom: 10%;
+  }
 
   .profilePicture {
     width: 80px;
     height: 80px;
     margin-right: 10px;
+  }
+
+  .fix {
+    display: flex;
+    align-items: center;
+    gap: 50px;
   }
 
   .username {
@@ -131,8 +159,17 @@
     gap: 5px;
   }
 
+  .fix {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+  }
+
   .profilePicture {
-    margin: 0 auto 10px;
+    margin: 0 auto 7px;
   }
 
   .profileInfo {

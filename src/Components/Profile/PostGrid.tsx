@@ -1,15 +1,6 @@
 import React from 'react';
 import styles from './profile.module.css';
-
-type User = {
-  username: string;
-  bio: string;
-  profilePicture: string;
-  posts: number;
-  followers: number;
-  following: number;
-  photos: string[];
-};
+import { User } from './UserInterface';
 
 interface ProfilePageProps {
   user: User;
