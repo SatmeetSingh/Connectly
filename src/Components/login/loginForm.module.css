@@ -4,7 +4,7 @@
   min-width: 500px;
   background-color: #ffffff;
   padding: 3%;
-  margin-top: 30px;
+  margin-top: 10px;
   border-radius: 20px;
   margin-left: 30px;
   display: flex;
@@ -32,4 +32,8 @@
     min-width: 300px;
     border-radius: 10px;
   }
+}
+
+.line::before {
+  border: 1px solid black;
 }

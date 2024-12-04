@@ -1,13 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useNavigation, useParams } from 'react-router-dom';
 import LoginForm from '../../Components/login/LoginForm';
 import Button from '../../utils/Button';
+interface LoginPageProp {}
 
-function LoginPage() {
+const LoginPage: React.FC<LoginPageProp> = () => {
   return (
-    <div>
+    <div className="overflow-hidden">
       <LoginForm />
     </div>
   );
-}
+};
 
 export default LoginPage;
