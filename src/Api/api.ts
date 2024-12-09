@@ -18,12 +18,13 @@ interface UpdatedData {
   bio?: string;
   gender?: string;
   profilePicture?: string;
+  file?: File;
 }
 
 export const updateUser = async (updatedData: UpdatedData) => {
   try {
     const response = await axios.patch(
-      'https://example.com/users/123',
+      `https://localhost:7272/api/users/update/${userId}`,
       updatedData
     );
     console.log('Response:', response.data);

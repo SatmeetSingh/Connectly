@@ -69,13 +69,13 @@ export function LargeNavbar() {
             </a>
           </li>
           <li>
-            <a
-              href="#notification"
+            <Link
+              to="notification"
               className="flex gap-2 items-center mb-[-10px] mt-[-10px] ml-[-3px]"
             >
               <IoMdNotificationsOutline size={45} />
               <span>Notification</span>
-            </a>
+            </Link>
           </li>
           <li>
             <a href="#Create" className="flex gap-2">

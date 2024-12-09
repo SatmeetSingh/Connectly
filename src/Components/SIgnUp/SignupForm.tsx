@@ -1,34 +1,26 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './SignUpForm.module.css';
-import { useState } from 'react';
 import axios from 'axios';
-// import { isRejected } from '@reduxjs/toolkit';
 import { TextField } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PasswordEye from '../../utils/PasswordEye';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setFormData,
-  setIsAuthenticated,
   setIsShown,
   setErrors,
+  setLoading,
+  Data,
 } from '../../Pages/Auth/AuthSlice';
 import { RootState } from '../../store';
-
-interface Data {
-  username: string;
-  email: string;
-  password: string;
-}
 
 function SignupForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { formData, isAuthenticated, isShown, errors } = useSelector(
+  const { formData, loading, isShown, errors } = useSelector(
     (state: RootState) => state.auth
   );
 
-  const [loading, setLoading] = useState(false);
   const changePasswordType = () => {
     dispatch(setIsShown(!isShown));
   };
@@ -89,7 +81,7 @@ function SignupForm() {
     e.preventDefault();
     const errors = getErrors(formData);
     dispatch(setErrors(errors));
-    setLoading(true);
+    dispatch(setLoading(true));
 
     try {
       if (errors.length === 0) {
@@ -108,14 +100,14 @@ function SignupForm() {
         if (res.status !== 200) {
           return alert('Something went wrong.');
         }
-        setLoading(false);
+        dispatch(setLoading(false));
         navigate('/');
       } else {
-        setLoading(false);
+        dispatch(setLoading(false));
       }
     } catch (error) {
       console.error('Error creating user:', error);
-      setLoading(false);
+      dispatch(setLoading(false));
     }
   };
   const getErrorMessage = (field: string) =>
@@ -127,7 +119,6 @@ function SignupForm() {
         <div className="w-[100%]">
           <p className="text-center font-bold text-3xl mb-5">Sign Up </p>
         </div>
-
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-10 justify-center align-middle">
             <div className="w-[100%] flex flex-col gap-6">

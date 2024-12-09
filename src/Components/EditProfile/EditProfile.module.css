@@ -48,3 +48,11 @@
   outline: none;
   padding: 5px 0px 5px 10px;
 }
+
+.picture {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}

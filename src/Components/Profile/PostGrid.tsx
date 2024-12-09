@@ -9,7 +9,7 @@ interface ProfilePageProps {
 const PostGrid: React.FC<ProfilePageProps> = ({ user }) => {
   return (
     <div className={styles.postsGrid}>
-      {user.photos.map((photo, index) => (
+      {user.posts.map((photo, index) => (
         <div key={index} className={styles.postItem}>
           <img
             src={photo}

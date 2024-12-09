@@ -1,9 +1,13 @@
 import styles from './EditProfile.module.css';
 import { RxCross2 } from 'react-icons/rx';
 import { GoCheck } from 'react-icons/go';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import UploadPhoto from './UploadPhoto';
+import { useState } from 'react';
 
 export default function EditProfile() {
+  const [selectedFile, setSelecteFile] = useState();
+
   return (
     <div className={styles.EditProfile}>
       <div>
@@ -19,12 +23,12 @@ export default function EditProfile() {
       </div>
       <div className={styles.imageSection}>
         <img
-          src="defaultImage.svg"
-          alt={`profile`}
+          src="defaultImage.png"
+          alt="profile"
           className={styles.profilePicture}
         />
         <p className="text-base font-semibold text-blue-600 mr-4">
-          Change profile
+          <UploadPhoto />
         </p>
       </div>
       <nav className="w-[95%] flex flex-col gap-5 mt-5">
