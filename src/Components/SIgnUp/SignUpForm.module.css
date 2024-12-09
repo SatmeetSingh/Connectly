@@ -32,7 +32,9 @@
 
 @media (max-width: 600px) {
   .signuppage {
-    width: 90%;
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
     min-width: 300px;
     border-radius: 10px;
   }

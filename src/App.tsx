@@ -43,7 +43,7 @@ function App() {
               <Route path="notification" element={<NotificationPage />} />
               <Route path="popular" element={<PopularPage />} />
               <Route path="search" element={<SearchPage />} />
-              <Route path="profile" element={<Profile />} />
+              <Route path="profile" element={<Profile userId={userId} />} />
               <Route path="profile/EditProfile" element={<EditProfile />} />
               <Route path="profile/settings" element={<Settings />} />
             </Route>

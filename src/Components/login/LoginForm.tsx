@@ -1,42 +1,40 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import styles from './loginForm.module.css';
 import { FcGoogle } from 'react-icons/fc';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { TextField, Checkbox, FormControl } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PasswordEye from '../../utils/PasswordEye';
+import {
+  setLoginData,
+  setIsShown,
+  setErrors,
+  LoginData,
+  setLoading,
+} from '../../Pages/Auth/AuthSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
-interface LoginData {
-  Email: string;
-  Password: string;
-}
-interface loginFormProps {}
-
-const LoginForm: React.FC<loginFormProps> = () => {
-  const navigate = useNavigate();
-  // const { userId } = useParams();
-  const [loading, setLoading] = useState(false);
-  const [loginData, setLoginData] = useState({
-    Email: '',
-    Password: '',
-  });
-  const [errors, setErrors] = useState<{ field: string; message: string }[]>(
-    []
+const LoginForm = () => {
+  const dispatch = useDispatch();
+  const { errors, isShown, loginData, loading } = useSelector(
+    (state: RootState) => state.auth
   );
-  const [isShown, setIsShown] = useState(false);
+  const navigate = useNavigate();
 
   const changePasswordType = () => {
-    setIsShown(!isShown);
+    dispatch(setIsShown(!isShown));
   };
 
   const onChange = (value: string, e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setLoginData({
-      ...loginData,
-      [value]: e.target.value,
-    });
+    dispatch(
+      setLoginData({
+        ...loginData,
+        [value]: e.target.value,
+      })
+    );
   };
 
   const getErrors = (data: LoginData) => {
@@ -75,8 +73,8 @@ const LoginForm: React.FC<loginFormProps> = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const errors = getErrors(loginData);
-    setErrors(errors);
-    setLoading(true);
+    dispatch(setErrors(errors));
+    dispatch(setLoading(true));
 
     try {
       if (errors.length === 0) {
@@ -85,22 +83,24 @@ const LoginForm: React.FC<loginFormProps> = () => {
           `https://localhost:7272/api/users/login`,
           loginData
         );
-        alert('login successful');
         if (res.status === 200) {
           localStorage.setItem('loggedIn', 'true');
           if (res.data?.user?.id) {
             const userId = res.data.user.id;
             localStorage.setItem('userId', userId);
+            dispatch(setLoading(false));
             navigate(`/${userId}`);
           } else {
             console.error('Login failed: No user ID returned');
           }
         }
       } else {
-        setLoginData({
-          Email: '',
-          Password: '',
-        });
+        dispatch(
+          setLoginData({
+            Email: '',
+            Password: '',
+          })
+        );
       }
     } catch (error) {
       console.error('Error creating user:', error);

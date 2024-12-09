@@ -5,7 +5,7 @@ interface LoginPageProp {}
 
 const LoginPage: React.FC<LoginPageProp> = () => {
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden flex justify-start h-[100%]">
       <LoginForm />
     </div>
   );

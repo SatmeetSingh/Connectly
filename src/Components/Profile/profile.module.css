@@ -12,7 +12,7 @@
 
 /* General Styling */
 .profilePage {
-  max-width: 500px;
+  max-width: 550px;
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -22,10 +22,11 @@
 /* Profile Header Section */
 .profileHeader {
   display: flex;
+  flex-direction: column;
   align-items: center;
   margin-top: 20px;
   margin-bottom: 20px;
-  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  flex-wrap: wrap;
   /* gap: 10px; */
 }
 
@@ -37,6 +38,7 @@
 }
 
 .addPhoto {
+  cursor: pointer;
   width: 20px;
   height: 20px;
   display: flex;
@@ -53,30 +55,43 @@
 .profileInfo {
   flex: 1;
   min-width: 200px;
+  /* display: flex; */
 }
 
 .username {
-  font-size: 24px;
-  font-weight: bold;
+  align-self: center;
+  font-size: 16px;
+  font-weight: 900;
   margin-bottom: 10px;
 }
 
 .stats {
   display: flex;
   gap: 25px;
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: 10px;
-  flex-wrap: wrap; /* Wrap stats on smaller screens */
+  /* flex-wrap: wrap; */
+}
+
+.stats span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .bio {
   font-size: 14px;
+  padding-left: 5px;
   color: #666;
+  align-self: self-start;
 }
 
 .fix {
   display: flex;
   align-items: center;
+  justify-content: space-around;
+  width: 90%;
+  gap: 50px;
 }
 
 /* Posts Grid Section */
@@ -131,7 +146,9 @@
   .fix {
     display: flex;
     align-items: center;
-    gap: 50px;
+    /* justify-content: space-around; */
+    width: 90%;
+    gap: 80px;
   }
 
   .username {
@@ -164,8 +181,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    /* flex-direction: column; */
     gap: 5px;
+    padding-left: 5px;
   }
 
   .profilePicture {

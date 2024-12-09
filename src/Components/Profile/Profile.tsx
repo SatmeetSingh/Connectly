@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { lazy, useEffect, useState } from 'react';
 import ProfileNav from './ProfileNav';
 import styles from './profile.module.css';
 import PostGrid from './PostGrid';
@@ -10,7 +10,7 @@ import { LuUserPlus2 } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 import ProfileHeader from './ProfileHeader';
 import { getUserbyId } from '../../Api/api';
-import { User } from './UserInterface';
+import { User, userdata } from './UserInterface';
 
 const user = {
   username: 'Satmeet_Singh',
@@ -30,28 +30,11 @@ const user = {
   ],
 };
 
-const userdata = {
-  id: '',
-  username: '',
-  email: '',
-  password: '',
-  name: '',
-  profilePicture: '',
-  bio: '',
-  gender: '',
-  createdDate: '',
-  updatedDate: null,
-  followersCount: 0,
-  followingCount: 0,
-  isActive: true,
-  posts: [],
-  comments: [],
-  likes: [],
-  following: [],
-  followers: [],
-};
+interface ProfileProp {
+  userId: string | null;
+}
 
-export default function Profile() {
+const Profile: React.FC<ProfileProp> = ({ userId }) => {
   const [userData, setUserData] = useState<User>(userdata);
 
   useEffect(() => {
@@ -62,23 +45,27 @@ export default function Profile() {
     getData();
   }, []);
 
-  console.log(userData.name);
-
   return (
     <div className={styles.profilePage}>
       <ProfileNav username={userData.username} />
       <div className={styles.profileHeader}>
         <ProfileHeader user={userData} />
-        <p className={styles.bio}>{user.bio}</p>
-        <div className="grid grid-flow-col w-[100%] gap-2 mt-3">
-          <Button variant="contained" size="small" className="col-span-10">
-            <Link to="editProfile">Edit Profile</Link>
+        <p className={styles.bio}>{userData.bio}</p>
+        <div className="grid grid-flow-col w-[100%] gap-2 mt-3 ">
+          <Button variant="contained" size="small" className="col-span-10 ">
+            <Link to="editProfile" className="max-sm:text-[11px]">
+              Edit Profile
+            </Link>
           </Button>
-          <Button variant="outlined" size="small" className="col-span-10">
-            Share Profile
+          <Button variant="outlined" size="small" className="col-span-10 ">
+            <Link to="editProfile" className="max-sm:text-[11px]">
+              Share Profile
+            </Link>
           </Button>
           <Button variant="outlined" size="small" className="col-span-1 ">
-            <LuUserPlus2 size={20} />
+            <Link to="editProfile" className="max-sm:text-[11px]">
+              <LuUserPlus2 size={20} />
+            </Link>
           </Button>
         </div>
       </div>
@@ -95,8 +82,10 @@ export default function Profile() {
       </div>
       {/* Posts Grid */}
       <div className="border-t-[1px] py-1 border-black">
-        <PostGrid user={user} />
+        <PostGrid user={userData} />
       </div>
     </div>
   );
-}
+};
+
+export default Profile;

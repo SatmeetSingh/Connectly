@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface Data {
+export interface Data {
   username: string;
   email: string;
   password: string;
 }
 
-interface LoginData {
-  email: string;
-  password: string;
+export interface LoginData {
+  Email: string;
+  Password: string;
 }
 
 interface state {
@@ -17,6 +17,7 @@ interface state {
   loginData: LoginData;
   errors: { field: string; message: string }[];
   isShown: boolean;
+  loading: boolean;
 }
 
 // export const SignUpUser = As;
@@ -29,11 +30,12 @@ const initialState: state = {
     password: '',
   },
   loginData: {
-    email: '',
-    password: '',
+    Email: '',
+    Password: '',
   },
   errors: [],
   isShown: false,
+  loading: false,
 };
 
 export const AuthSlice = createSlice({
@@ -46,8 +48,14 @@ export const AuthSlice = createSlice({
     setFormData: (state, action) => {
       state.formData = action.payload;
     },
+    setLoginData: (state, action) => {
+      state.loginData = action.payload;
+    },
     setIsShown: (state, action) => {
       state.isShown = action.payload;
+    },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
     },
     setErrors: (state, action) => {
       state.errors = action.payload;
@@ -55,7 +63,13 @@ export const AuthSlice = createSlice({
   },
 });
 
-export const { setFormData, setIsAuthenticated, setIsShown, setErrors } =
-  AuthSlice.actions;
+export const {
+  setFormData,
+  setIsAuthenticated,
+  setIsShown,
+  setLoginData,
+  setLoading,
+  setErrors,
+} = AuthSlice.actions;
 
 export default AuthSlice.reducer;

@@ -15,3 +15,24 @@ export interface User {
   following: any[];
   followers: any[];
 }
+
+export const userdata = {
+  id: '',
+  username: '',
+  email: '',
+  password: '',
+  name: '',
+  profilePicture: '',
+  bio: '',
+  gender: '',
+  createdDate: '',
+  updatedDate: null,
+  followersCount: 0,
+  followingCount: 0,
+  isActive: true,
+  posts: [],
+  comments: [],
+  likes: [],
+  following: [],
+  followers: [],
+};
