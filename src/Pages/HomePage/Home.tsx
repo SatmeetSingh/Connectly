@@ -2,15 +2,17 @@
 import { AboveNavBar } from '../../Components/Navbar/Navbar';
 import styles from './Home.module.css';
 import { useParams } from 'react-router-dom';
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 const Post = lazy(() => import('../../Components/Post/Post'));
-import { getUserbyId } from '../../Api/api';
 import { StorySection } from '../../Components/Profile/ProfileHeader';
-import { User, userdata } from '../../Components/Profile/UserInterface';
 import PostSkeleton from '../../utils/LazyLoading/PostSkeleton/PostSkeleton';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store';
+import { fetchData } from './HomeSlice';
 
-export function Home() {
-  const [userData, setUserData] = useState<User>(userdata);
+export default function Home() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { userData } = useSelector((state: RootState) => state.home);
   const { userId } = useParams();
 
   const LazyLoad = () => {
@@ -22,14 +24,10 @@ export function Home() {
       </>
     );
   };
-
   useEffect(() => {
-    const getData = async () => {
-      const data = await getUserbyId();
-      setUserData(data);
-    };
-    getData();
-  }, []);
+    dispatch(fetchData({ url: '/users', userId: `${userId}` }));
+  }, [dispatch]);
+
   return (
     <div className={styles.home}>
       <div className="min-[750px]:hidden">

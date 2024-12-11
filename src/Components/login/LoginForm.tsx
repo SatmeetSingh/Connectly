@@ -9,16 +9,17 @@ import PasswordEye from '../../utils/PasswordEye';
 import {
   setLoginData,
   setIsShown,
-  setErrors,
   LoginData,
   setLoading,
+  setErrors,
+  loginUser,
 } from '../../Pages/Auth/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { AppDispatch, RootState } from '../../store';
 
 const LoginForm = () => {
-  const dispatch = useDispatch();
-  const { errors, isShown, loginData, loading } = useSelector(
+  const dispatch = useDispatch<AppDispatch>();
+  const { errors, isShown, loginData, status } = useSelector(
     (state: RootState) => state.auth
   );
   const navigate = useNavigate();
@@ -74,26 +75,29 @@ const LoginForm = () => {
     e.preventDefault();
     const errors = getErrors(loginData);
     dispatch(setErrors(errors));
-    dispatch(setLoading(true));
 
     try {
       if (errors.length === 0) {
         console.log('User is Correct');
-        let res = await axios.post(
-          `https://localhost:7272/api/users/login`,
-          loginData
-        );
-        if (res.status === 200) {
-          localStorage.setItem('loggedIn', 'true');
-          if (res.data?.user?.id) {
-            const userId = res.data.user.id;
-            localStorage.setItem('userId', userId);
-            dispatch(setLoading(false));
-            navigate(`/${userId}`);
-          } else {
-            console.error('Login failed: No user ID returned');
-          }
+        debugger;
+        const response = await dispatch(
+          loginUser({
+            url: '/users/login',
+            data: loginData,
+          })
+        ).unwrap();
+
+        const userId = localStorage.getItem('userId');
+        console.log(userId);
+        if (response) {
+          navigate(`/${userId}`);
         }
+        dispatch(
+          setLoginData({
+            Email: '',
+            Password: '',
+          })
+        );
       } else {
         dispatch(
           setLoginData({
@@ -107,8 +111,9 @@ const LoginForm = () => {
     }
   };
 
-  const getErrorMessage = (field: string) =>
-    errors.find((error) => error.field === field)?.message;
+  const getErrorMessage = (field: string) => {
+    return errors.find((error) => error.field === field)?.message;
+  };
 
   return (
     <div className={styles.loginpage}>
@@ -171,8 +176,8 @@ const LoginForm = () => {
             />
             <LoadingButton
               size="small"
-              loading={loading}
-              loadingIndicator="Loading…"
+              loading={status === 'pending'}
+              loadingIndicator="Loading..."
               variant="contained"
               type="submit"
             >
@@ -193,7 +198,7 @@ const LoginForm = () => {
         <div className="w-[100%]">
           <LoadingButton
             size="small"
-            loading={loading}
+            loading={status === 'pending'}
             loadingIndicator="Loading…"
             variant="contained"
             className="w-full"

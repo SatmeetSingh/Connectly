@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { UserApiClient } from '../../Api/UserApiService';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { AxiosRequestConfig } from 'axios';
 
 export interface Data {
   username: string;
@@ -18,7 +20,45 @@ interface state {
   errors: { field: string; message: string }[];
   isShown: boolean;
   loading: boolean;
+  status: string;
 }
+
+interface PostDataArgs {
+  url: string;
+  data: Data;
+  config?: AxiosRequestConfig;
+}
+
+interface PostLoginDataArgs {
+  url: string;
+  data: LoginData;
+  config?: AxiosRequestConfig;
+}
+
+export const createUser = createAsyncThunk(
+  'signup/createUser',
+  async ({ url, data, config = {} }: PostDataArgs, { rejectWithValue }) => {
+    try {
+      return await UserApiClient.signupPost(url, data, config);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const loginUser = createAsyncThunk(
+  'login/loginUser',
+  async (
+    { url, data, config = {} }: PostLoginDataArgs,
+    { rejectWithValue }
+  ) => {
+    try {
+      return await UserApiClient.loginPost(url, data, config);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
 // export const SignUpUser = As;
 
@@ -34,6 +74,7 @@ const initialState: state = {
     Password: '',
   },
   errors: [],
+  status: 'idle',
   isShown: false,
   loading: false,
 };
@@ -60,6 +101,25 @@ export const AuthSlice = createSlice({
     setErrors: (state, action) => {
       state.errors = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createUser.pending, (state) => {
+        state.status = 'pending';
+        state.errors = [];
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.formData = action.payload;
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.status = 'pending';
+        state.errors = [];
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.loginData = action.payload;
+      });
   },
 });
 

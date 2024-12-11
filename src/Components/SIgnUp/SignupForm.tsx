@@ -9,15 +9,16 @@ import {
   setFormData,
   setIsShown,
   setErrors,
-  setLoading,
   Data,
+  createUser,
 } from '../../Pages/Auth/AuthSlice';
-import { RootState } from '../../store';
+import { AppDispatch, RootState } from '../../store';
 
 function SignupForm() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { formData, loading, isShown, errors } = useSelector(
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { formData, isShown, errors, status } = useSelector(
     (state: RootState) => state.auth
   );
 
@@ -81,33 +82,23 @@ function SignupForm() {
     e.preventDefault();
     const errors = getErrors(formData);
     dispatch(setErrors(errors));
-    dispatch(setLoading(true));
 
     try {
       if (errors.length === 0) {
         console.log('User being Created');
 
-        const res = await axios.post(
-          `https://localhost:7272/api/users/signup`,
-          formData
+        await dispatch(
+          createUser({
+            url: '/users/signup',
+            data: formData,
+          })
         );
-        console.log('User Created:', res.data);
-        setFormData({
-          username: '',
-          email: '',
-          password: '',
-        });
-        if (res.status !== 200) {
-          return alert('Something went wrong.');
+        if (status === 'fulfilled') {
+          navigate('/');
         }
-        dispatch(setLoading(false));
-        navigate('/');
-      } else {
-        dispatch(setLoading(false));
       }
     } catch (error) {
       console.error('Error creating user:', error);
-      dispatch(setLoading(false));
     }
   };
   const getErrorMessage = (field: string) =>
@@ -183,8 +174,8 @@ function SignupForm() {
             </div>
             <LoadingButton
               size="small"
-              loading={loading}
-              loadingIndicator="Loading…"
+              loading={status === 'pending'}
+              loadingIndicator="Loading..."
               variant="contained"
               type="submit"
             >

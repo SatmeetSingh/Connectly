@@ -1,4 +1,4 @@
-import React, { lazy, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ProfileNav from './ProfileNav';
 import styles from './profile.module.css';
 import PostGrid from './PostGrid';
@@ -9,41 +9,23 @@ import SavedIcon from '../../icons/CustomSavedIcon';
 import { LuUserPlus2 } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 import ProfileHeader from './ProfileHeader';
-import { getUserbyId } from '../../Api/api';
-import { User, userdata } from './UserInterface';
-
-const user = {
-  username: 'Satmeet_Singh',
-  Name: 'Satmeet Singh',
-  bio: 'Photographer & Traveler 🌍 | Sharing moments 📸',
-  profilePicture: 'https://via.placeholder.com/150', // Replace with actual profile pic URL
-  posts: 120,
-  followers: 1020,
-  following: 300,
-  photos: [
-    'https://via.placeholder.com/150/1', // Replace with actual URLs
-    'https://via.placeholder.com/150/2',
-    'https://via.placeholder.com/150/3',
-    'https://via.placeholder.com/150/4',
-    'https://via.placeholder.com/150/5',
-    'https://via.placeholder.com/150/6',
-  ],
-};
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store';
+import { fetchData } from '../../Pages/HomePage/HomeSlice';
 
 interface ProfileProp {
   userId: string | null;
 }
 
 const Profile: React.FC<ProfileProp> = ({ userId }) => {
-  const [userData, setUserData] = useState<User>(userdata);
+  const dispatch = useDispatch<AppDispatch>();
+  const { userData, status, error } = useSelector(
+    (state: RootState) => state.home
+  );
 
   useEffect(() => {
-    const getData = async () => {
-      const data = await getUserbyId();
-      setUserData(data);
-    };
-    getData();
-  }, []);
+    dispatch(fetchData({ url: '/users', userId: `${userId}` }));
+  }, [dispatch]);
 
   return (
     <div className={styles.profilePage}>
