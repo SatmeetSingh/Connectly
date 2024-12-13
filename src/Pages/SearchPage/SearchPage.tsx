@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SearchBar from '../../utils/search/SearchBar';
 import { IoIosArrowRoundBack } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { searchUser, setSearch } from './SearchSlice';
+import { clearSearch, searchUser, setSearch } from './SearchSlice';
 import React, { useEffect } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import SearchUsers from '../../Components/UserSearch/SearchUsers';
@@ -11,6 +11,7 @@ import styles from '../../Components/UserSearch/searchUser.module.css';
 
 export default function () {
   const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
   const { input, userData, status, error } = useSelector(
     (state: RootState) => state.search
   );
@@ -21,14 +22,20 @@ export default function () {
     await dispatch(searchUser({ url: '/users/search', Data: value }));
   };
 
+  useEffect(() => {
+    return () => {
+      dispatch(clearSearch());
+    };
+  }, [location.pathname, dispatch]);
+
   return (
     <div className="flex flex-col align-middle">
       <div className="flex w-[100%] align-middle justify-around ">
         <Link
           to="#"
           onClick={() => {
-            window.history.back();
             dispatch(setSearch(''));
+            window.history.back();
           }}
         >
           <IoIosArrowRoundBack size={50} className="self-center mt-2" />
@@ -57,7 +64,12 @@ export default function () {
         {status === 'fulfilled' && userData.length > 0
           ? userData.map((user, id) => (
               <div key={id} className="self-center w-[90%]">
-                <Link to={`${user.id}`}>
+                <Link
+                  to={`${user.id}`}
+                  onClick={() => {
+                    dispatch(setSearch(''));
+                  }}
+                >
                   <SearchUsers user={user} />
                 </Link>
               </div>

@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import OtherUserProfile from './Components/Profile/OtherUsersProfile';
+import SuspenseLoading from './utils/LazyLoading/Suspense/Suspense';
 const Home = lazy(() => import('./Pages/HomePage/Home'));
 const LoginPage = lazy(() => import('./Pages/Auth/LoginPage'));
 const SignOutPage = lazy(() => import('./Pages/Auth/SignupPage'));
@@ -25,7 +26,7 @@ function App() {
   return (
     <div className="h-[100%] min-[750px]:flex min-[750px]:gap-3">
       <BrowserRouter>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<SuspenseLoading />}>
           <Routes>
             {/* unauthoized route */}
             {!isLoggedIn && (
@@ -36,7 +37,6 @@ function App() {
             )}
 
             {/* protectedRoute */}
-
             <Route element={<ProtectedRoute />}>
               <Route path="signup" element={<Navigate to={`/${userId}`} />} />
               <Route path="/" element={<Navigate to={`/${userId}`} />} />
