@@ -11,6 +11,7 @@ import { ImCompass2 } from 'react-icons/im';
 import { RxVideo } from 'react-icons/rx';
 import { AiOutlineMessage, AiOutlineVideoCameraAdd } from 'react-icons/ai';
 import { CiHeart } from 'react-icons/ci';
+import { TbBrandMessenger } from 'react-icons/tb';
 import { IoReorderThree } from 'react-icons/io5';
 import ReelsIcon from '../../icons/CustomReelsIcon';
 import CustonCreateIcon from '../../icons/CustonCreateIcon';
@@ -142,11 +143,11 @@ export const AboveNavBar = () => {
             <a href="#">Connecty</a>
           </div>
         </li>
-        <li className="flex align-middle gap-5 ">
+        <li className="flex align-middle justify-center gap-3 ">
           <Link to="notification">
-            <CiHeart size={30} />
+            <CiHeart size={24} />
           </Link>
-          <FaRegComments size={30} />
+          <TbBrandMessenger size={24} />
         </li>
       </ul>
     </div>

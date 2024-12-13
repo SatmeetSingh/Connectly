@@ -85,8 +85,6 @@ function SignupForm() {
 
     try {
       if (errors.length === 0) {
-        console.log('User being Created');
-
         await dispatch(
           createUser({
             url: '/users/signup',

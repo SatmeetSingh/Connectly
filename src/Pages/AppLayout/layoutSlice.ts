@@ -31,13 +31,13 @@ export const UpdateData = createAsyncThunk(
   }
 );
 
-interface State {
+export interface AppState {
   updateData: UpdatedData;
   status: string;
   error: null | object;
 }
 
-const initialState: State = {
+const initialState: AppState = {
   updateData: {
     name: '',
     username: '',

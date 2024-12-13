@@ -7,40 +7,58 @@ import CustomBorderIcon from '../../icons/CustomBorderIcon';
 import ReelsIcon from '../../icons/CustomReelsIcon';
 import SavedIcon from '../../icons/CustomSavedIcon';
 import { LuUserPlus2 } from 'react-icons/lu';
-import { Link } from 'react-router-dom';
-import ProfileHeader from './ProfileHeader';
+import { Link, useParams } from 'react-router-dom';
+import ProfileHeader, { StorySection } from './ProfileHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { fetchData } from '../../Pages/HomePage/HomeSlice';
 
-interface ProfileProp {
-  userId: string | null;
-}
-
-const Profile: React.FC<ProfileProp> = ({ userId }) => {
+const OtherUserProfile = () => {
+  const { userid } = useParams();
   const dispatch = useDispatch<AppDispatch>();
-  const { userData } = useSelector((state: RootState) => state.home);
-
+  const { userData, status, error } = useSelector(
+    (state: RootState) => state.home
+  );
   useEffect(() => {
-    dispatch(fetchData({ url: '/users', userId: `${userId}` }));
+    dispatch(fetchData({ url: '/users', userId: `${userid}` }));
   }, [dispatch]);
 
   return (
     <div className={styles.profilePage}>
       <ProfileNav username={userData.username} />
       <div className={styles.profileHeader}>
-        <ProfileHeader user={userData} />
+        <div className={styles.fix}>
+          <div className="flex flex-col self-center">
+            <StorySection user={userData} />
+          </div>
+
+          <div className={styles.profileInfo}>
+            <div className={styles.stats}>
+              <span>
+                {userData.posts?.length} <p>posts</p>
+              </span>
+              <span>
+                {userData.followersCount}
+                <p>followers</p>
+              </span>
+              <span>
+                {userData.followingCount}
+                <p>following</p>
+              </span>
+            </div>
+          </div>
+        </div>
         <p className={styles.bio}>{userData.bio}</p>
         <div className="grid grid-flow-col w-[100%] gap-2 mt-3 ">
-          <Button variant="contained" size="small" className="col-span-10 ">
-            <Link to="editProfile" className="max-sm:text-[11px]">
-              Edit Profile
-            </Link>
+          <Button
+            variant="contained"
+            size="small"
+            className="col-span-10 max-sm:text-[11px]"
+          >
+            Follow
           </Button>
           <Button variant="outlined" size="small" className="col-span-10 ">
-            <Link to="editProfile" className="max-sm:text-[11px]">
-              Share Profile
-            </Link>
+            Share Profile
           </Button>
           <Button variant="outlined" size="small" className="col-span-1 ">
             <Link to="editProfile" className="max-sm:text-[11px]">
@@ -68,4 +86,4 @@ const Profile: React.FC<ProfileProp> = ({ userId }) => {
   );
 };
 
-export default Profile;
+export default OtherUserProfile;

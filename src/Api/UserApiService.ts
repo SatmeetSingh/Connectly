@@ -4,10 +4,9 @@ import { Data, LoginData } from '../Pages/Auth/AuthSlice';
 import { UpdatedData } from '../Pages/AppLayout/layoutSlice';
 
 export const UserApiClient = {
-  get: async (url: string, userId: string | null, config = {}) => {
+  getById: async (url: string, userId: string | null, config = {}) => {
     try {
       const response = await axiosInstance.get(`${url}/${userId}`, config);
-      console.log('get: ', response.data);
       return response.data;
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -23,10 +22,27 @@ export const UserApiClient = {
     }
   },
 
+  searchByName: async (url: string, data: string, config = {}) => {
+    if (!url || !data?.length) return [];
+
+    try {
+      const response = await axiosInstance.get(
+        `${url}?username=${data}`,
+        config
+      );
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Axios Error:', error.message);
+        throw error.response?.data || 'No response from server';
+      }
+      throw new Error('An unknown error occurred');
+    }
+  },
+
   signupPost: async (url: string, data: Data, config = {}) => {
     try {
       const res = await axiosInstance.post(url, data, config);
-      console.log('Signup: ', res.data);
       return res.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -49,7 +65,6 @@ export const UserApiClient = {
   loginPost: async (url: string, data: LoginData, config = {}) => {
     try {
       const res = await axiosInstance.post(url, data, config);
-      console.log('Login: ', res);
       const userId = res.data.user?.id;
       if (userId) {
         localStorage.setItem('userId', userId);
@@ -84,7 +99,6 @@ export const UserApiClient = {
   ) => {
     try {
       const res = await axiosInstance.patch(`${url}/${userId}`, data, config);
-      console.log('Update: ', res);
       return res.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {

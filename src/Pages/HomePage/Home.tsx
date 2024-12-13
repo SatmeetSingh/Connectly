@@ -34,7 +34,7 @@ export default function Home() {
         <AboveNavBar />
       </div>
 
-      <div className=" h-[90px] w-[100vw] place-items-start  ">
+      <div className=" h-[95px] w-[100vw] place-items-start bg-white mb-1">
         <div className=" max-w-[500px]  flex justify-start ">
           <StorySection user={userData} />
         </div>

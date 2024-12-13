@@ -17,20 +17,20 @@ export const fetchData = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      return await UserApiClient.get(url, userId, config);
+      return await UserApiClient.getById(url, userId, config);
     } catch (error) {
       return rejectWithValue(error);
     }
   }
 );
 
-export interface state {
+export interface HomeState {
   userData: User;
   status: string;
   error: null | object;
 }
 
-const initialState: state = {
+const initialState: HomeState = {
   userData: userdata,
   status: 'idle', // loading status (idle, loading, succeeded, failed)
   error: null,
