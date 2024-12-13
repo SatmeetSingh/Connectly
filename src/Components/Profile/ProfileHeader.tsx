@@ -12,7 +12,6 @@ const ProfileHeader: React.FC<ProfilePageProps> = ({ user }) => {
     <div className={styles.fix}>
       <div className="flex flex-col self-center">
         <StorySection user={user} />
-        <h2 className={styles.username}>{user.username}</h2>
       </div>
 
       <div className={styles.profileInfo}>
@@ -36,23 +35,26 @@ const ProfileHeader: React.FC<ProfilePageProps> = ({ user }) => {
 
 export const StorySection: React.FC<ProfilePageProps> = ({ user }) => {
   return (
-    <div className="flex relative self-center ">
-      {user.profilePicture === '' ? (
-        <img
-          src="/defaultImage.svg"
-          alt={`${user.username}'s profile`}
-          className={styles.profilePicture}
-        />
-      ) : (
-        <img
-          src={`https://localhost:7272${user.profilePicture}`} // Dynamic URL
-          alt="Profile"
-          className={styles.profilePicture}
-        />
-      )}
-      <div className={styles.addPhoto}>
-        <FaPlus color="white" size={13} />
+    <div className="flex flex-col ">
+      <div className="flex relative self-center ">
+        {user.profilePicture === '' ? (
+          <img
+            src="/defaultImage.svg"
+            alt={`${user.username}'s profile`}
+            className={styles.profilePicture}
+          />
+        ) : (
+          <img
+            src={`https://localhost:7272${user.profilePicture}`} // Dynamic URL
+            alt="Profile"
+            className={styles.profilePicture}
+          />
+        )}
+        <div className={styles.addPhoto}>
+          <FaPlus color="white" size={13} />
+        </div>
       </div>
+      <div className="text-[12px] mt-[-5px] font-semibold">{user.username}</div>
     </div>
   );
 };

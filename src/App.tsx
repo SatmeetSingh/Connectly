@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
+import OtherUserProfile from './Components/Profile/OtherUsersProfile';
 const Home = lazy(() => import('./Pages/HomePage/Home'));
 const LoginPage = lazy(() => import('./Pages/Auth/LoginPage'));
 const SignOutPage = lazy(() => import('./Pages/Auth/SignupPage'));
@@ -44,6 +45,7 @@ function App() {
                 <Route path="notification" element={<NotificationPage />} />
                 <Route path="popular" element={<PopularPage />} />
                 <Route path="search" element={<SearchPage />} />
+                <Route path="search/:userid" element={<OtherUserProfile />} />
                 <Route path="profile" element={<Profile userId={userId} />} />
                 <Route path="profile/EditProfile" element={<EditProfile />} />
                 <Route path="profile/settings" element={<Settings />} />

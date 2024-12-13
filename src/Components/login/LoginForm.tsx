@@ -78,8 +78,6 @@ const LoginForm = () => {
 
     try {
       if (errors.length === 0) {
-        console.log('User is Correct');
-        debugger;
         const response = await dispatch(
           loginUser({
             url: '/users/login',
@@ -88,7 +86,6 @@ const LoginForm = () => {
         ).unwrap();
 
         const userId = localStorage.getItem('userId');
-        console.log(userId);
         if (response) {
           navigate(`/${userId}`);
         }
@@ -119,7 +116,7 @@ const LoginForm = () => {
     <div className={styles.loginpage}>
       <div className="w-[90%] px-3 py-4 flex flex-col gap-4">
         <div className="flex flex-col gap-3">
-          <p className="items-center font-semibold text-3xl mt-5">
+          <p className="items-center font-semibold text-3xl mt-5  ">
             Login to your account
           </p>
           <p className="text-lg">Please enter your details</p>

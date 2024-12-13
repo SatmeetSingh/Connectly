@@ -61,7 +61,7 @@ export default function Post() {
             ? posts[0].caption
             : posts[0].caption.slice(0, 50).trimEnd()}
           <button className={styles.readMoreBtn} onClick={ToggleText}>
-            {!isExpamded ? '?more' : 'less'}
+            {!isExpamded && '... more'}
           </button>
         </div>
         <div>View all comments</div>

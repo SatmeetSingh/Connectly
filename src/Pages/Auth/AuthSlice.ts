@@ -13,7 +13,7 @@ export interface LoginData {
   Password: string;
 }
 
-interface state {
+export interface AuthState {
   isAuthenticated: boolean;
   formData: Data;
   loginData: LoginData;
@@ -62,7 +62,7 @@ export const loginUser = createAsyncThunk(
 
 // export const SignUpUser = As;
 
-const initialState: state = {
+const initialState: AuthState = {
   isAuthenticated: false,
   formData: {
     username: '',
