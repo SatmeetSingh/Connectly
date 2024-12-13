@@ -1,13 +1,30 @@
 import { useNavigate } from 'react-router-dom';
+import ConfirmLogout from './ConfirmLogout';
+import { useState } from 'react';
 
 export default function Logout() {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState('false');
 
   const handleClick = () => {
-    window.localStorage.removeItem('loggedIn');
-    window.localStorage.removeItem('userId');
-    navigate('/');
+    setShowModal('true');
   };
+
+  const handleCancel = () => {
+    setShowModal('false');
+  };
+
+  const handleConfirm = () => {
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('userId');
+
+    let loggedIn = localStorage.getItem('loggedIn');
+    let userId = localStorage.getItem('userId');
+    if (!loggedIn && userId === null) {
+      navigate('/');
+    }
+  };
+
   return (
     <div>
       <button
@@ -16,6 +33,10 @@ export default function Logout() {
       >
         Logout
       </button>
+
+      {showModal === 'true' && (
+        <ConfirmLogout onConfirm={handleConfirm} onCancel={handleCancel} />
+      )}
     </div>
   );
 }
