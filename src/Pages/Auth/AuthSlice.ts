@@ -4,6 +4,7 @@ import { AxiosRequestConfig } from 'axios';
 
 export interface Data {
   username: string;
+  name: string;
   email: string;
   password: string;
 }
@@ -66,6 +67,7 @@ const initialState: AuthState = {
   isAuthenticated: false,
   formData: {
     username: '',
+    name: '',
     email: '',
     password: '',
   },

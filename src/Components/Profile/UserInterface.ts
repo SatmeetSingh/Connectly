@@ -26,8 +26,6 @@ export const userdata = {
   profilePicture: '',
   bio: '',
   gender: '',
-  createdDate: '',
-  updatedDate: null,
   followersCount: 0,
   followingCount: 0,
   isActive: true,

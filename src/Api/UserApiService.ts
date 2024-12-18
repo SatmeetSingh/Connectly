@@ -7,10 +7,16 @@ export const UserApiClient = {
   getById: async (url: string, userId: string | null, config = {}) => {
     try {
       const response = await axiosInstance.get(`${url}/${userId}`, config);
+      if (response.data === null) {
+        localStorage.removeItem('userId');
+        localStorage.removeItem('loggedIn');
+        // window.location.reload();
+      }
       return response.data;
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error('Error Message:', error.message);
+
         if (error.response) {
           throw error.response?.data || error.message;
         }

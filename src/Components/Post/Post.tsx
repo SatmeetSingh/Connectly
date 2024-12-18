@@ -5,12 +5,15 @@ import { FaRegComment } from 'react-icons/fa6';
 import { TbLocationShare } from 'react-icons/tb';
 import { VscChromeRestore } from 'react-icons/vsc';
 import { useState } from 'react';
-import { posts, Users } from '../../utils/MockUserData';
+import { Post } from '../../Pages/HomePage/PostInterface';
+import { User } from '../Profile/UserInterface';
 
-const text =
-  ' Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero atrecusandae eius delectus animi iusto placeat corrupti totam, quaeratratione ullam voluptates consectetur explicabo nihil aliquam laborum, tenetur ipsum iste.';
+interface PostProp {
+  post: Post;
+  user: User;
+}
 
-export default function Post() {
+const PostBlock: React.FC<PostProp> = ({ post, user }) => {
   const maxlength = 70;
   const [isExpamded, setIsExpended] = useState(false);
   function ToggleText() {
@@ -22,33 +25,37 @@ export default function Post() {
         <div className={styles.header}>
           <div className={styles.headerleft}>
             <img
-              src={Users[0].profilePicture}
+              src={`https://localhost:7272${user.profilePicture}`}
               alt="ProfileImage"
               className={styles.profileCircle}
             />
-            <p>{posts[0].username}</p>
+            <p>{user.username}</p>
           </div>
           <p>
             <FaEllipsisVertical size={25} />
           </p>
         </div>
         <div className={styles.imagesection}>
-          <img src={posts[0].image} alt="flowerImage" className={styles.img} />
+          <img
+            src={`https://localhost:7272${post.imageUrl}`}
+            alt="flowerImage"
+            className={styles.img}
+          />
         </div>
 
         <div className={styles.userclick}>
           <ul>
             <li>
               <AiFillHeart size={25} />
-              <span>{posts[0].likes}</span>
+              <span>{post.likesCount}</span>
             </li>
             <li>
               <FaRegComment size={25} />
-              <span>{posts[0].comments}</span>
+              <span>{post.commentCount}</span>
             </li>
             <li>
               <TbLocationShare size={25} />
-              <span>301</span>
+              <span>{post.shareCount}</span>
             </li>
           </ul>
           <div>
@@ -56,10 +63,8 @@ export default function Post() {
           </div>
         </div>
         <div className={styles.datatext}>
-          <span>{posts[0].username}</span>
-          {isExpamded
-            ? posts[0].caption
-            : posts[0].caption.slice(0, 50).trimEnd()}
+          <span>{user.username}</span>
+          {isExpamded ? post.content : post.content.slice(0, 50).trimEnd()}
           <button className={styles.readMoreBtn} onClick={ToggleText}>
             {!isExpamded && '... more'}
           </button>
@@ -68,4 +73,6 @@ export default function Post() {
       </div>
     </div>
   );
-}
+};
+
+export default PostBlock;

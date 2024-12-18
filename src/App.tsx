@@ -1,7 +1,15 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { lazy, Suspense, useEffect, useState } from 'react';
-import OtherUserProfile from './Components/Profile/OtherUsersProfile';
+const OtherUserProfile = lazy(
+  () => import('./Components/Profile/OtherUsersProfile')
+);
 import SuspenseLoading from './utils/LazyLoading/Suspense/Suspense';
+import OtherUserPosts from './Components/UserPosts/OtherUsersPost';
+import PostBlock from './Components/Post/Post';
+import { fetchData, fetchPostsByUserId } from './Pages/HomePage/HomeSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from './store';
+const UserPosts = lazy(() => import('./Components/UserPosts/UserPosts'));
 const Home = lazy(() => import('./Pages/HomePage/Home'));
 const LoginPage = lazy(() => import('./Pages/Auth/LoginPage'));
 const SignOutPage = lazy(() => import('./Pages/Auth/SignupPage'));
@@ -46,7 +54,12 @@ function App() {
                 <Route path="popular" element={<PopularPage />} />
                 <Route path="search" element={<SearchPage />} />
                 <Route path="search/:userid" element={<OtherUserProfile />} />
+                <Route
+                  path="search/:userid/posts"
+                  element={<OtherUserPosts />}
+                />
                 <Route path="profile" element={<Profile userId={userId} />} />
+                <Route path="profile/posts" element={<UserPosts />} />
                 <Route path="profile/EditProfile" element={<EditProfile />} />
                 <Route path="profile/settings" element={<Settings />} />
               </Route>

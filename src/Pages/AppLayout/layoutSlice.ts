@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosRequestConfig } from 'axios';
 
 export interface UpdatedData {
-  name?: string;
+  Name?: string;
   username?: string;
   bio?: string;
   gender?: string;
@@ -24,7 +24,7 @@ export const UpdateData = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      return UserApiClient.updatePatch(url, data, userId, config);
+      return await UserApiClient.updatePatch(url, data, userId, config);
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -37,9 +37,9 @@ export interface AppState {
   error: null | object;
 }
 
-const initialState: AppState = {
+export const initialState: AppState = {
   updateData: {
-    name: '',
+    Name: '',
     username: '',
     bio: '',
     gender: '',
@@ -65,7 +65,11 @@ const ApplayoutSlice = createSlice({
       })
       .addCase(UpdateData.fulfilled, (state, action) => {
         state.status = 'fulfilled';
-        state.updateData = action.payload;
+        const { name, value } = action.payload;
+        state.updateData = {
+          ...state.updateData,
+          [name]: value, // Update the specific field based on name and value
+        };
       })
       .addCase(UpdateData.rejected, (state, action) => {
         state.status = 'rejected';

@@ -39,6 +39,14 @@ function SignupForm() {
   const getErrors = (data: Data) => {
     const errors: { field: string; message: string }[] = [];
 
+    if (!data.name) {
+      errors.push({ field: 'name', message: 'Name required' });
+    } else if (data.name.length < 5) {
+      errors.push({
+        field: 'name',
+        message: 'Name must be at least 5 characters',
+      });
+    }
     if (!data.username) {
       errors.push({ field: 'username', message: 'Username required' });
     } else if (data.username.length < 5) {
@@ -85,13 +93,22 @@ function SignupForm() {
 
     try {
       if (errors.length === 0) {
-        await dispatch(
+        const res = await dispatch(
           createUser({
             url: '/users/signup',
             data: formData,
           })
+        ).unwrap();
+
+        dispatch(
+          setFormData({
+            username: '',
+            name: '',
+            email: '',
+            password: '',
+          })
         );
-        if (status === 'fulfilled') {
+        if (res) {
           navigate('/');
         }
       }
@@ -125,6 +142,23 @@ function SignupForm() {
                 {getErrorMessage('username') && (
                   <p className={styles.errorMessage}>
                     {getErrorMessage('username')}
+                  </p>
+                )}
+              </div>
+              <div className={styles.inputsection}>
+                <TextField
+                  id="outlined-basic"
+                  type="text"
+                  label="Name"
+                  variant="outlined"
+                  value={formData.name}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange(e, 'name')
+                  }
+                />
+                {getErrorMessage('name') && (
+                  <p className={styles.errorMessage}>
+                    {getErrorMessage('name')}
                   </p>
                 )}
               </div>
