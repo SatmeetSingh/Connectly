@@ -1,11 +1,12 @@
-.home {
+.postpage {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
   overflow: hidden;
   background-color: rgba(255, 228, 196, 0.3);
   scrollbar-width: none;
+}
+.posts {
+  padding-top: 10px;
+  padding-bottom: 70px;
 }
 
 @media (max-width: 750px) {

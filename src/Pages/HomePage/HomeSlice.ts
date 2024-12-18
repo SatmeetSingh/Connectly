@@ -2,6 +2,8 @@ import { AxiosRequestConfig } from 'axios';
 import { UserApiClient } from '../../Api/UserApiService';
 import { User, userdata } from '../../Components/Profile/UserInterface';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PostApiClient } from '../../Api/PostApiService';
+import { Post, postData } from './PostInterface';
 
 interface FetchDataArgs {
   url: string;
@@ -24,15 +26,36 @@ export const fetchData = createAsyncThunk(
   }
 );
 
+export const fetchPostsByUserId = createAsyncThunk(
+  'home/fetchPost',
+  async (
+    { url, userId = null, config = {} }: FetchDataArgs,
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await PostApiClient.getPostByUserId(url, userId, config);
+      return res.data.posts;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export interface ErrorObject {
+  [key: string]: any;
+}
+
 export interface HomeState {
   userData: User;
+  postData: Post[];
   status: string;
-  error: null | object;
+  error: null | ErrorObject;
 }
 
 const initialState: HomeState = {
   userData: userdata,
-  status: 'idle', // loading status (idle, loading, succeeded, failed)
+  postData: [],
+  status: 'idle',
   error: null,
 };
 
@@ -51,6 +74,18 @@ const HomeSlice = createSlice({
         state.userData = action.payload;
       })
       .addCase(fetchData.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload || 'An error occurred';
+      })
+      .addCase(fetchPostsByUserId.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(fetchPostsByUserId.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.postData = action.payload;
+      })
+      .addCase(fetchPostsByUserId.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload || 'An error occurred';
       });

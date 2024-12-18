@@ -11,17 +11,20 @@ import { Link, useParams } from 'react-router-dom';
 import ProfileHeader, { StorySection } from './ProfileHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { fetchData } from '../../Pages/HomePage/HomeSlice';
+import { fetchData, fetchPostsByUserId } from '../../Pages/HomePage/HomeSlice';
 
 const OtherUserProfile = () => {
   const { userid } = useParams();
   const dispatch = useDispatch<AppDispatch>();
-  const { userData, status, error } = useSelector(
+  const { userData, postData, status, error } = useSelector(
     (state: RootState) => state.home
   );
+  console.log(userid);
   useEffect(() => {
     dispatch(fetchData({ url: '/users', userId: `${userid}` }));
-  }, [dispatch]);
+    dispatch(fetchPostsByUserId({ url: '/Posts/user', userId: `${userid}` }));
+  }, [dispatch, userid]);
+  console.log(postData, status);
 
   return (
     <div className={styles.profilePage}>
@@ -80,7 +83,7 @@ const OtherUserProfile = () => {
       </div>
       {/* Posts Grid */}
       <div className="border-t-[1px] py-1 border-black">
-        <PostGrid user={userData} />
+        <PostGrid post={postData} status={status} error={error} />
       </div>
     </div>
   );

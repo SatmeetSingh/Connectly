@@ -1,7 +1,19 @@
 .post {
-  max-width: 500px;
+  max-width: 400px;
   font-size: 15px;
   margin-bottom: 25px;
+}
+
+@media (max-width: 400px) {
+  .post {
+    width: 100vw;
+  }
+}
+
+@media (min-width: 400px) {
+  .post {
+    width: 400px;
+  }
 }
 
 .postbox {
@@ -62,7 +74,7 @@
 
 .userclick ul {
   display: flex;
-  gap: 20px;
+  gap: 30px;
 }
 
 .userclick ul li {

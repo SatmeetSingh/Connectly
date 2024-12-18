@@ -12,6 +12,7 @@ import {
   UpdateData,
   UpdatedData,
 } from '../../Pages/AppLayout/layoutSlice';
+import { responsiveFontSizes } from '@mui/material';
 
 export default function EditProfile() {
   const navigate = useNavigate();
@@ -21,22 +22,8 @@ export default function EditProfile() {
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
-    if (userId) {
-      dispatch(fetchData({ url: '/users', userId: `${userId}` }));
-    }
+    dispatch(fetchData({ url: '/users', userId: `${userId}` }));
   }, [dispatch, userId]);
-
-  useEffect(() => {
-    if (status === 'fulfilled' && userData) {
-      setUpdateData({
-        name: userData.name || '',
-        username: userData.username || '',
-        bio: userData.bio || '',
-        gender: userData.gender || '',
-        file: undefined,
-      });
-    }
-  }, [userData, status]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -44,15 +31,15 @@ export default function EditProfile() {
     >
   ) => {
     const { name, value } = e.target;
-    setUpdateData((prev: UpdatedData) => ({
-      ...prev,
-      [name]: value,
-    }));
+    dispatch(setUpdateData({ name, value }));
   };
+
+  useEffect(() => {
+    console.log(updateData); // Check if the state is updated after dispatch
+  }, [updateData]);
 
   const handleClick = async () => {
     try {
-      window.history.back();
       const response = await dispatch(
         UpdateData({
           url: '/users/update',
@@ -60,7 +47,9 @@ export default function EditProfile() {
           data: updateData,
         })
       ).unwrap();
+      console.log(response.user);
       if (response) {
+        // window.history.back();
         navigate(-1);
       }
     } catch (error) {}
@@ -95,7 +84,7 @@ export default function EditProfile() {
           name="name"
           className={styles.input}
           placeholder="Name"
-          value={updateData.name}
+          value={updateData.Name}
           onChange={handleChange}
         />
         <input
@@ -113,7 +102,7 @@ export default function EditProfile() {
           value={updateData.bio}
           onChange={handleChange}
         />
-        <select name="gender" value={updateData.gender} onChange={handleChange}>
+        <select name="gender" value={userData.gender} onChange={handleChange}>
           <option value="">Select Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>

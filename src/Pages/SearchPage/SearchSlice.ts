@@ -12,8 +12,6 @@ interface searchUserProp {
 export const searchUser = createAsyncThunk(
   'search/searchuser',
   async ({ url, Data, config = {} }: searchUserProp, { rejectWithValue }) => {
-    // if (!url || !Data) return rejectWithValue('Missing URL or data');
-
     try {
       return await UserApiClient.searchByName(url, Data, config);
     } catch (error: any) {
