@@ -34,7 +34,8 @@ axiosInstance.interceptors.response.use(
           console.error('Server Error:', message);
           break;
         case 504:
-          console.error('Gateway Timeout: The server did not respond in time');
+          console.error('Gateway Timeout: The server did not respond in time'); // time out in api gateway
+
           break;
         default:
           console.error(

@@ -20,7 +20,7 @@ export default function Logout() {
 
     let loggedIn = localStorage.getItem('loggedIn');
     let userId = localStorage.getItem('userId');
-    if (!loggedIn && userId === null) {
+    if (!loggedIn && userId === null && !userId) {
       navigate('/');
     }
   };

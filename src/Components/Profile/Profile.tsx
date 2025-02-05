@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import CustomBorderIcon from '../../icons/CustomBorderIcon';
 import ReelsIcon from '../../icons/CustomReelsIcon';
 import SavedIcon from '../../icons/CustomSavedIcon';
-import { LuUserPlus2 } from 'react-icons/lu';
+import { LuUserPlus } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 import ProfileHeader from './ProfileHeader';
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,7 +47,7 @@ const Profile: React.FC<ProfileProp> = ({ userId }) => {
           </Button>
           <Button variant="outlined" size="small" className="col-span-1 ">
             <Link to="editProfile" className="max-sm:text-[11px]">
-              <LuUserPlus2 size={20} />
+              <LuUserPlus size={20} />
             </Link>
           </Button>
         </div>
