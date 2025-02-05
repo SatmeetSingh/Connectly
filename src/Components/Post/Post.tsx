@@ -4,9 +4,15 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa6';
 import { TbLocationShare } from 'react-icons/tb';
 import { VscChromeRestore } from 'react-icons/vsc';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Post } from '../../Pages/HomePage/PostInterface';
 import { User } from '../Profile/UserInterface';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store';
+import {
+  AddLikeToPost,
+  FetchLikesByPost,
+} from '../../Pages/HomePage/HomeSlice';
 
 interface PostProp {
   post: Post;
@@ -14,8 +20,25 @@ interface PostProp {
 }
 
 const PostBlock: React.FC<PostProp> = ({ post, user }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { count, LikeData } = useSelector((state: RootState) => state.home);
   const maxlength = 70;
   const [isExpamded, setIsExpended] = useState(false);
+
+  useEffect(() => {
+    dispatch(FetchLikesByPost({ url: '/likes', postId: post.id }));
+  }, [dispatch, count]);
+
+  async function handleLikes() {
+    try {
+      await dispatch(
+        AddLikeToPost({ url: '/likes', userId: user.id, postId: post.id })
+      ).unwrap();
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
+  }
+
   function ToggleText() {
     setIsExpended(!isExpamded);
   }
@@ -46,8 +69,10 @@ const PostBlock: React.FC<PostProp> = ({ post, user }) => {
         <div className={styles.userclick}>
           <ul>
             <li>
-              <AiFillHeart size={25} />
-              <span>{post.likesCount}</span>
+              <button onClick={handleLikes}>
+                <AiFillHeart size={25} />
+              </button>
+              <span>{count}</span>
             </li>
             <li>
               <FaRegComment size={25} />

@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import Home from '../HomePage/Home';
 import NavBar from '../../Components/Navbar/Navbar';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
 export default function () {
+  const isLoggedIn = window.localStorage.getItem('loggedIn')?.toString();
+
   return (
     <div className="h-[100%] min-[750px]:flex min-[750px]:gap-3">
       <NavBar />
-      <Outlet />
+      {isLoggedIn === 'true' ? <Outlet /> : <Navigate to="/" />}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LuUser2 } from 'react-icons/lu';
+import { LuUser } from 'react-icons/lu';
 const IconWithBorder = () => {
   return (
     <div
@@ -33,7 +33,7 @@ const IconWithBorder = () => {
 
       {/* Icon placed over the SVG container */}
       <div style={{ position: 'absolute', top: '4px', left: '2px' }}>
-        <LuUser2 size={20} />
+        <LuUser size={20} />
       </div>
     </div>
   );

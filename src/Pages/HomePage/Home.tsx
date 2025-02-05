@@ -40,13 +40,13 @@ export default function Home() {
         </div>
       </div>
 
-      {/* <div className={styles.posts}>
-        <Suspense fallback={<LazyLoad />}>
+      <div className={styles.posts}>
+        {/* <Suspense fallback={<LazyLoad />}>
           <Post />
           <Post />
           <Post />
-        </Suspense>
-      </div> */}
+        </Suspense> */}
+      </div>
     </div>
   );
 }

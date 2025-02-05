@@ -3,7 +3,7 @@ import styles from './profile.module.css';
 import { Post } from '../../Pages/HomePage/PostInterface';
 import { ErrorObject } from '../../Pages/HomePage/HomeSlice';
 import { Link } from 'react-scroll';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 
 interface ProfilePageProps {
   post: Post[];
@@ -12,16 +12,28 @@ interface ProfilePageProps {
 }
 
 const PostGrid: React.FC<ProfilePageProps> = ({ post, status, error }) => {
+  const { userid } = useParams();
+  const userId = localStorage.getItem('userId');
   return (
     <>
       {status === 'failed' && (
         <div className="flex justify-center align-middle flex-col mt-4 gap-3">
-          <p className=" font-semibold text-pretty text-center  text-sm">
-            {error?.message}
-          </p>
-          <p className=" font-semibold text-blue-700 text-center text-sm">
-            Create new post
-          </p>
+          {!userid ? (
+            <>
+              <p className=" font-semibold text-pretty text-center  text-sm">
+                {error?.message}
+              </p>
+              <p className=" font-semibold text-blue-700 text-center text-sm">
+                Create new post
+              </p>
+            </>
+          ) : (
+            <>
+              <p className=" font-semibold text-pretty text-center  text-sm">
+                No Post has been Created
+              </p>
+            </>
+          )}
         </div>
       )}
       <div className={styles.postsGrid}>

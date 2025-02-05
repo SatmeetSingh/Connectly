@@ -34,10 +34,6 @@ export default function EditProfile() {
     dispatch(setUpdateData({ name, value }));
   };
 
-  useEffect(() => {
-    console.log(updateData); // Check if the state is updated after dispatch
-  }, [updateData]);
-
   const handleClick = async () => {
     try {
       const response = await dispatch(
@@ -74,9 +70,9 @@ export default function EditProfile() {
           alt="profile"
           className={styles.profilePicture}
         />
-        <p className="text-base font-semibold text-blue-600 mr-4">
+        <div className="text-base font-semibold text-blue-600 mr-4">
           <UploadPhoto />
-        </p>
+        </div>
       </div>
       <nav className="w-[95%] flex flex-col gap-5 mt-5">
         <input

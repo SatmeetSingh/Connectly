@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import CustomBorderIcon from '../../icons/CustomBorderIcon';
 import ReelsIcon from '../../icons/CustomReelsIcon';
 import SavedIcon from '../../icons/CustomSavedIcon';
-import { LuUserPlus2 } from 'react-icons/lu';
+import { LuUserPlus } from 'react-icons/lu';
 import { Link, useParams } from 'react-router-dom';
 import ProfileHeader, { StorySection } from './ProfileHeader';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,12 +19,10 @@ const OtherUserProfile = () => {
   const { userData, postData, status, error } = useSelector(
     (state: RootState) => state.home
   );
-  console.log(userid);
   useEffect(() => {
     dispatch(fetchData({ url: '/users', userId: `${userid}` }));
     dispatch(fetchPostsByUserId({ url: '/Posts/user', userId: `${userid}` }));
   }, [dispatch, userid]);
-  console.log(postData, status);
 
   return (
     <div className={styles.profilePage}>
@@ -65,7 +63,7 @@ const OtherUserProfile = () => {
           </Button>
           <Button variant="outlined" size="small" className="col-span-1 ">
             <Link to="editProfile" className="max-sm:text-[11px]">
-              <LuUserPlus2 size={20} />
+              <LuUserPlus size={20} />
             </Link>
           </Button>
         </div>

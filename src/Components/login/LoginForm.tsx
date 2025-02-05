@@ -10,7 +10,6 @@ import {
   setLoginData,
   setIsShown,
   LoginData,
-  setLoading,
   setErrors,
   loginUser,
 } from '../../Pages/Auth/AuthSlice';
@@ -130,7 +129,7 @@ const LoginForm = () => {
                   id="outlined-basic"
                   label="Email"
                   variant="outlined"
-                  value={loginData.Email}
+                  value={loginData.Email || ''}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     onChange('Email', e)
                   }
@@ -148,7 +147,7 @@ const LoginForm = () => {
                     type={isShown ? 'text' : 'password'}
                     label="Password"
                     variant="outlined"
-                    value={loginData.Password}
+                    value={loginData.Password || ''}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       onChange('Password', e)
                     }

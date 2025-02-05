@@ -1,7 +1,7 @@
 import axios from 'axios';
-import axiosInstance from './AxiosInstance';
-import { Data, LoginData } from '../Pages/Auth/AuthSlice';
-import { UpdatedData } from '../Pages/AppLayout/layoutSlice';
+import axiosInstance from '../AxiosInstance';
+import { Data, LoginData } from '../../Pages/Auth/AuthSlice';
+import { UpdatedData } from '../../Pages/AppLayout/layoutSlice';
 
 export const UserApiClient = {
   getById: async (url: string, userId: string | null, config = {}) => {
@@ -18,7 +18,9 @@ export const UserApiClient = {
         console.error('Error Message:', error.message);
 
         if (error.response) {
-          throw error.response?.data || error.message;
+          throw new Error(
+            error.response?.data?.message || 'No response received from server'
+          );
         }
         throw new Error('No response received from server');
       } else {

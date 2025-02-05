@@ -4,11 +4,14 @@ import './index.css';
 import App from './App.tsx';
 import { Provider } from 'react-redux';
 import store from './store.ts';
+import { callback } from './utils/Callback';
 
 createRoot(document.getElementById('root')!).render(
-  // <StrictMode>
-  <Provider store={store}>
-    <App />
-  </Provider>
-  // </StrictMode>
+  <StrictMode>
+    {/* <Profiler id="APP" onRender={callback}> */}
+    <Provider store={store}>
+      <App />
+    </Provider>
+    {/* </Profiler> */}
+  </StrictMode>
 );
