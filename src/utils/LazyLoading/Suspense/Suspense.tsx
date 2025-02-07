@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './suspense.module.css';
 
 export default function SuspenseLoading() {
@@ -9,7 +9,6 @@ export default function SuspenseLoading() {
       </div>
       <div className={styles.spinnerContainer}>
         <div className={styles.spinner}>
-          {' '}
           <div className={styles.spinnerBlue}></div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { UserApiClient } from '../../Api/AspDotNetAPis/UserApiService';
-import { User, userdata } from '../../Components/Profile/UserInterface';
+import { User } from '../../Components/Profile/UserInterface';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosRequestConfig } from 'axios';
 
@@ -14,7 +14,7 @@ export const searchUser = createAsyncThunk(
   async ({ url, Data, config = {} }: searchUserProp, { rejectWithValue }) => {
     try {
       return await UserApiClient.searchByName(url, Data, config);
-    } catch (error: any) {
+    } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         if (error.response && error.response.status === 404) return [];
         return rejectWithValue(error.response?.data || error.message);

@@ -1,3 +1,4 @@
+import React from 'react';
 import SignupForm from '../../Components/SIgnUp/SignupForm';
 
 function SignOutPage() {

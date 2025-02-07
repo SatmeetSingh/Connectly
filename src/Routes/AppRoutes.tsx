@@ -1,3 +1,4 @@
+import React from 'react';
 import { lazy, Suspense } from 'react';
 import Error from '../utils/Error';
 import SuspenseLoading from '../utils/LazyLoading/Suspense/Suspense';
@@ -15,6 +16,7 @@ import { ProtectedRoutePath } from './RoutePath/routes';
 export default function AppRoutes() {
   const isLoggedIn = window.localStorage.getItem('loggedIn');
   const userId = window.localStorage.getItem('userId');
+
   console.log(typeof isLoggedIn);
   return (
     <div className="h-[100%] min-[750px]:flex min-[750px]:gap-3">

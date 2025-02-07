@@ -1,7 +1,8 @@
+import React from 'react';
 import NavBar from '../../Components/Navbar/Navbar';
 import { Navigate, Outlet } from 'react-router-dom';
 
-export default function () {
+export default function AppLayout() {
   const isLoggedIn = window.localStorage.getItem('loggedIn')?.toString();
 
   return (

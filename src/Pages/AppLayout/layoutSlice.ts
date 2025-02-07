@@ -1,5 +1,5 @@
 import { UserApiClient } from '../../Api/AspDotNetAPis/UserApiService';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosRequestConfig } from 'axios';
 
 export interface UpdatedData {

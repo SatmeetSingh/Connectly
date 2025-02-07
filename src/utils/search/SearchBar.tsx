@@ -1,6 +1,6 @@
 import { TfiSearch } from 'react-icons/tfi';
 import styles from './SearchBar.module.css';
-import React, { useState } from 'react';
+import React from 'react';
 
 interface SearchBarProp {
   search: string;
@@ -18,7 +18,7 @@ const SearchBar: React.FC<SearchBarProp> = ({ search, handleSearch }) => {
       />
       <input
         type="text"
-        placeholder={`Search`}
+        placeholder="Search"
         value={search}
         onChange={handleSearch}
         className="pl-8 p-2 w-full outline-none rounded-lg bg-[rgba(100,211,193,0.2)]"

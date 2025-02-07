@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { Link, useLocation } from 'react-router-dom';
 import SearchBar from '../../utils/search/SearchBar';
 import { IoIosArrowRoundBack } from 'react-icons/io';
@@ -9,7 +10,7 @@ import { IoSearchOutline } from 'react-icons/io5';
 import SearchUsers from '../../Components/UserSearch/SearchUsers';
 import styles from '../../Components/UserSearch/searchUser.module.css';
 
-export default function () {
+function SearchPage() {
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
   const { input, userData, status, error } = useSelector(
@@ -79,3 +80,5 @@ export default function () {
     </div>
   );
 }
+
+export default SearchPage;

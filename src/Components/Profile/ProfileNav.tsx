@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './profile.module.css';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaChevronLeft } from 'react-icons/fa';

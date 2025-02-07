@@ -1,10 +1,10 @@
 import styles from './post.module.css';
 import { FaEllipsisVertical } from 'react-icons/fa6';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { AiFillHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa6';
 import { TbLocationShare } from 'react-icons/tb';
 import { VscChromeRestore } from 'react-icons/vsc';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Post } from '../../Pages/HomePage/PostInterface';
 import { User } from '../Profile/UserInterface';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,13 +21,12 @@ interface PostProp {
 
 const PostBlock: React.FC<PostProp> = ({ post, user }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { count, LikeData } = useSelector((state: RootState) => state.home);
-  const maxlength = 70;
+  const { count } = useSelector((state: RootState) => state.home);
   const [isExpamded, setIsExpended] = useState(false);
 
   useEffect(() => {
     dispatch(FetchLikesByPost({ url: '/likes', postId: post.id }));
-  }, [dispatch, count]);
+  }, [dispatch, count, post.id]);
 
   async function handleLikes() {
     try {

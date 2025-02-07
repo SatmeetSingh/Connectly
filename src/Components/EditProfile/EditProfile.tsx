@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import styles from './EditProfile.module.css';
 import { RxCross2 } from 'react-icons/rx';
 import { GoCheck } from 'react-icons/go';
@@ -5,20 +6,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import UploadPhoto from './UploadPhoto';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { useEffect } from 'react';
 import { fetchData } from '../../Pages/HomePage/HomeSlice';
-import {
-  setUpdateData,
-  UpdateData,
-  UpdatedData,
-} from '../../Pages/AppLayout/layoutSlice';
-import { responsiveFontSizes } from '@mui/material';
+import { setUpdateData, UpdateData } from '../../Pages/AppLayout/layoutSlice';
 
 export default function EditProfile() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { updateData } = useSelector((state: RootState) => state.app);
-  const { userData, status } = useSelector((state: RootState) => state.home);
+  const { userData } = useSelector((state: RootState) => state.home);
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
@@ -48,7 +43,9 @@ export default function EditProfile() {
         // window.history.back();
         navigate(-1);
       }
-    } catch (error) {}
+    } catch (error: unknown) {
+      console.log(error);
+    }
   };
 
   return (

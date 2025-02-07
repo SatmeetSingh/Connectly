@@ -1,4 +1,4 @@
-import { FaPlus } from 'react-icons/fa6';
+import React from 'react';
 import styles from './searchUser.module.css';
 import { User } from '../Profile/UserInterface';
 

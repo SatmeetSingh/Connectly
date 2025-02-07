@@ -13,12 +13,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { fetchData, fetchPostsByUserId } from '../../Pages/HomePage/HomeSlice';
 
-interface ProfileProp {
-  userId: string | null;
-}
-
-const Profile: React.FC<ProfileProp> = ({ userId }) => {
+const Profile = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const userId = window.localStorage.getItem('userId');
   const { userData, postData, status, error } = useSelector(
     (state: RootState) => state.home
   );
@@ -26,7 +23,7 @@ const Profile: React.FC<ProfileProp> = ({ userId }) => {
   useEffect(() => {
     dispatch(fetchData({ url: '/users', userId: `${userId}` }));
     dispatch(fetchPostsByUserId({ url: '/Posts/user', userId: `${userId}` }));
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   return (
     <div className={styles.profilePage}>
