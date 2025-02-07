@@ -8,7 +8,7 @@ import ReelsIcon from '../../icons/CustomReelsIcon';
 import SavedIcon from '../../icons/CustomSavedIcon';
 import { LuUserPlus } from 'react-icons/lu';
 import { Link, useParams } from 'react-router-dom';
-import ProfileHeader, { StorySection } from './ProfileHeader';
+import { StorySection } from './ProfileHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { fetchData, fetchPostsByUserId } from '../../Pages/HomePage/HomeSlice';

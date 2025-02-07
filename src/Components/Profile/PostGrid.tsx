@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './profile.module.css';
 import { Post } from '../../Pages/HomePage/PostInterface';
 import { ErrorObject } from '../../Pages/HomePage/HomeSlice';
-import { Link } from 'react-scroll';
 import { NavLink, useParams } from 'react-router-dom';
 
 interface ProfilePageProps {
@@ -13,7 +12,6 @@ interface ProfilePageProps {
 
 const PostGrid: React.FC<ProfilePageProps> = ({ post, status, error }) => {
   const { userid } = useParams();
-  const userId = localStorage.getItem('userId');
   return (
     <>
       {status === 'failed' && (

@@ -1,6 +1,5 @@
-import styles from './popularposts.module.css';
-
 import React from 'react';
+import styles from './popularposts.module.css';
 
 const photos = [
   'https://via.placeholder.com/150/1', // Replace with actual URLs
@@ -29,7 +28,7 @@ const photos = [
   'https://via.placeholder.com/150/5',
 ];
 
-export default function () {
+export default function PopularPosts() {
   return (
     <div className="self-center mb-24">
       <div className={styles.postsGrid}>

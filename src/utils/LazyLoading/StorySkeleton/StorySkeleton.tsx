@@ -1,4 +1,5 @@
 import styles from './storySkeleton.module.css';
+import React from 'react';
 
 export default function StorySkeleton() {
   return (

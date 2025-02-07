@@ -1,29 +1,40 @@
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ConfirmLogout from './ConfirmLogout';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Logout() {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState('false');
+  const logoutHandled = useRef(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isLoggedOut, setIsLoggedOut] = useState(false);
 
   const handleClick = () => {
-    setShowModal('true');
+    setShowModal(true);
   };
 
   const handleCancel = () => {
-    setShowModal('false');
+    setShowModal(false);
   };
 
   const handleConfirm = () => {
-    localStorage.removeItem('loggedIn');
-    localStorage.removeItem('userId');
-
-    let loggedIn = localStorage.getItem('loggedIn');
-    let userId = localStorage.getItem('userId');
-    if (!loggedIn && userId === null && !userId) {
-      navigate('/');
-    }
+    setIsLoggedOut(true);
   };
+
+  useEffect(() => {
+    if (isLoggedOut && !logoutHandled.current) {
+      logoutHandled.current = true; // Prevents the effect from running again
+      localStorage.removeItem('loggedIn');
+      localStorage.removeItem('userId');
+
+      if (
+        !localStorage.getItem('loggedIn') &&
+        !localStorage.getItem('userId')
+      ) {
+        navigate('/');
+      }
+    }
+  }, [isLoggedOut, navigate]);
 
   return (
     <div>
@@ -34,7 +45,7 @@ export default function Logout() {
         Logout
       </button>
 
-      {showModal === 'true' && (
+      {showModal && (
         <ConfirmLogout onConfirm={handleConfirm} onCancel={handleCancel} />
       )}
     </div>

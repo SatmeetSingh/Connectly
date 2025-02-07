@@ -1,9 +1,8 @@
-import Button from '../../utils/Button';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import { LiaHomeSolid } from 'react-icons/lia';
 import { IoMdNotificationsOutline } from 'react-icons/io';
-import { FaRegComments } from 'react-icons/fa6';
 import { TfiSearch } from 'react-icons/tfi';
 import { useEffect, useState } from 'react';
 import { CgProfile } from 'react-icons/cg';

@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import styles from './userPost.module.css';
 import PostSkeleton from '../../utils/LazyLoading/PostSkeleton/PostSkeleton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,6 @@ import { AppDispatch, RootState } from '../../store';
 import { fetchData, fetchPostsByUserId } from '../../Pages/HomePage/HomeSlice';
 import PostBlock from '../Post/Post';
 import { useParams } from 'react-router-dom';
-
 export default function OtherUserPosts() {
   const dispatch = useDispatch<AppDispatch>();
   const { userid } = useParams();

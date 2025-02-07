@@ -1,9 +1,7 @@
-import { Link, useNavigate, useNavigation, useParams } from 'react-router-dom';
+import React from 'react';
 import LoginForm from '../../Components/login/LoginForm';
-import Button from '../../utils/Button';
-interface LoginPageProp {}
 
-const LoginPage: React.FC<LoginPageProp> = () => {
+const LoginPage = () => {
   return (
     <div className="overflow-hidden flex justify-start h-[100%]">
       <LoginForm />

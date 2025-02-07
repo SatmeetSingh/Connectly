@@ -1,11 +1,10 @@
-import { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import styles from './userPost.module.css';
 import PostSkeleton from '../../utils/LazyLoading/PostSkeleton/PostSkeleton';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { fetchData, fetchPostsByUserId } from '../../Pages/HomePage/HomeSlice';
 import PostBlock from '../Post/Post';
-import { useNavigate } from 'react-router-dom';
 
 export default function UserPosts() {
   const dispatch = useDispatch<AppDispatch>();

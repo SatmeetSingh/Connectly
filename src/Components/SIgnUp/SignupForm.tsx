@@ -1,8 +1,7 @@
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './SignUpForm.module.css';
-import axios from 'axios';
-import { TextField } from '@mui/material';
-import LoadingButton from '@mui/lab/LoadingButton';
+import { TextField, Button } from '@mui/material';
 import PasswordEye from '../../utils/PasswordEye';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -204,7 +203,7 @@ function SignupForm() {
                 )}
               </div>
             </div>
-            <LoadingButton
+            <Button
               size="small"
               loading={status === 'pending'}
               loadingIndicator="Loading..."
@@ -212,7 +211,7 @@ function SignupForm() {
               type="submit"
             >
               Sign up
-            </LoadingButton>
+            </Button>
             <div>
               <p className="mt-[-20px]">
                 Already have an account?

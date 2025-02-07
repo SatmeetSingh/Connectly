@@ -1,6 +1,5 @@
 import axios from 'axios';
 import axiosInstance from '../AxiosInstance';
-import { LikesApiClient } from './LikeApiService';
 
 export const PostApiClient = {
   getPostByUserId: async (url: string, userId: string | null, config: {}) => {

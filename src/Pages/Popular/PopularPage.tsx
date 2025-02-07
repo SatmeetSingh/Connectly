@@ -1,11 +1,11 @@
+import React from 'react';
 import { TfiSearch } from 'react-icons/tfi';
 import PopularPosts from '../../Components/Popularposts/PopularPosts';
 
 import styles from './popularPage.module.css';
 import { Link, useParams } from 'react-router-dom';
 import { setSearch } from '../SearchPage/SearchSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { useDispatch } from 'react-redux';
 
 export default function PopularPage() {
   const dispatch = useDispatch();

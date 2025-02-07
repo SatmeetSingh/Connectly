@@ -1,10 +1,9 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './loginForm.module.css';
 import { FcGoogle } from 'react-icons/fc';
-import axios from 'axios';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { TextField, Checkbox, FormControl } from '@mui/material';
-import LoadingButton from '@mui/lab/LoadingButton';
+import { TextField, Checkbox, Button } from '@mui/material';
 import PasswordEye from '../../utils/PasswordEye';
 import {
   setLoginData,
@@ -170,7 +169,7 @@ const LoginForm = () => {
               control={<Checkbox defaultChecked />}
               label="Remember Me"
             />
-            <LoadingButton
+            <Button
               size="small"
               loading={status === 'pending'}
               loadingIndicator="Loading..."
@@ -178,10 +177,10 @@ const LoginForm = () => {
               type="submit"
             >
               Login
-            </LoadingButton>
+            </Button>
             <div className="mt-[-10px] flex flex-col gap-3">
               <p>
-                Don't have an account?
+                Don&lsquo;t have an account?
                 <Link to="/signup" className="text-blue-700">
                   Sign up
                 </Link>
@@ -192,7 +191,7 @@ const LoginForm = () => {
         </form>
         <p className={`w-[100%] text-center ${styles.line}`}>or</p>
         <div className="w-[100%]">
-          <LoadingButton
+          <Button
             size="small"
             loading={status === 'pending'}
             loadingIndicator="Loading…"
@@ -201,7 +200,7 @@ const LoginForm = () => {
           >
             <FcGoogle size={20} />
             Login with Google
-          </LoadingButton>
+          </Button>
         </div>
       </div>
     </div>
