@@ -1,17 +1,20 @@
 import React, { useEffect } from 'react';
-import ProfileNav from './ProfileNav';
-import styles from './profile.module.css';
-import PostGrid from './PostGrid';
+import ProfileNav from '../ProfileNav';
+import styles from '../profile.module.css';
+import PostGrid from '../PostGrid/PostGrid';
 import Button from '@mui/material/Button';
-import CustomBorderIcon from '../../icons/CustomBorderIcon';
-import ReelsIcon from '../../icons/CustomReelsIcon';
-import SavedIcon from '../../icons/CustomSavedIcon';
+import CustomBorderIcon from '../../../icons/CustomBorderIcon';
+import ReelsIcon from '../../../icons/CustomReelsIcon';
+import SavedIcon from '../../../icons/CustomSavedIcon';
 import { LuUserPlus } from 'react-icons/lu';
 import { Link, useParams } from 'react-router-dom';
-import { StorySection } from './ProfileHeader';
+import { StorySection } from '../ProfileHeader';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store';
-import { fetchData, fetchPostsByUserId } from '../../Pages/HomePage/HomeSlice';
+import { AppDispatch, RootState } from '../../../store';
+import {
+  fetchData,
+  fetchPostsByUserId,
+} from '../../../Pages/HomePage/HomeSlice';
 
 const OtherUserProfile = () => {
   const { userid } = useParams();

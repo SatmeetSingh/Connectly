@@ -5,11 +5,7 @@ interface ButtonProp {
 }
 
 const Button: React.FC<ButtonProp> = ({ children }) => {
-  return (
-    <button className="bg-[#4a90e2] text-white hover:bg-[#3a7bd5] ">
-      {children}
-    </button>
-  );
+  return <button className="border-[1px] px-2 py-1">{children}</button>;
 };
 
 export default Button;

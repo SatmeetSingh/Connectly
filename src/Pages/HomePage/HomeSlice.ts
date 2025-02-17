@@ -43,8 +43,11 @@ export const fetchPostsByUserId = createAsyncThunk(
     try {
       const res = await PostApiClient.getPostByUserId(url, userId, config);
       return res.data.posts;
-    } catch (error) {
-      return rejectWithValue(error);
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          'It looks like you have not posted anything yet'
+      );
     }
   }
 );
@@ -104,9 +107,9 @@ export const RemoveLikeFromPost = createAsyncThunk(
   }
 );
 
-export interface ErrorObject {
-  [key: string]: any;
-}
+// export interface ErrorObject {
+//   [key: string]: any;
+// }
 
 export interface HomeState {
   userData: User;
@@ -115,7 +118,7 @@ export interface HomeState {
   RemoveLikeData: { userId: string; postId: string };
   status: string;
   count: number;
-  error: null | ErrorObject;
+  error: null | string;
 }
 
 const initialState: HomeState = {
@@ -144,7 +147,10 @@ const HomeSlice = createSlice({
       })
       .addCase(fetchData.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload || 'An error occurred';
+        state.error =
+          typeof action.payload === 'string'
+            ? action.payload
+            : 'An error occurred';
       })
       .addCase(fetchPostsByUserId.pending, (state) => {
         state.status = 'loading';
@@ -156,7 +162,10 @@ const HomeSlice = createSlice({
       })
       .addCase(fetchPostsByUserId.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload || 'An error occurred';
+        state.error =
+          typeof action.payload === 'string'
+            ? action.payload
+            : 'An error occurred';
       })
       .addCase(FetchLikesByPost.pending, (state) => {
         state.status = 'loading';
@@ -168,7 +177,10 @@ const HomeSlice = createSlice({
       })
       .addCase(FetchLikesByPost.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload || 'An error occurred';
+        state.error =
+          typeof action.payload === 'string'
+            ? action.payload
+            : 'An error occurred';
       })
       .addCase(AddLikeToPost.pending, (state) => {
         state.status = 'loading';
@@ -180,20 +192,11 @@ const HomeSlice = createSlice({
       })
       .addCase(AddLikeToPost.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload || 'An error occurred';
+        state.error =
+          typeof action.payload === 'string'
+            ? action.payload
+            : 'An error occurred';
       });
-    // .addCase(RemoveLikeFromPost.pending, (state) => {
-    //   state.status = 'loading';
-    //   state.error = null;
-    // })
-    // .addCase(RemoveLikeFromPost.fulfilled, (state, action) => {
-    //   state.status = 'fulfilled';
-    //   state.RemoveLikeData = action.payload;
-    // })
-    // .addCase(RemoveLikeFromPost.rejected, (state, action) => {
-    //   state.status = 'failed';
-    //   state.error = action.payload || 'An error occurred';
-    // });
   },
 });
 

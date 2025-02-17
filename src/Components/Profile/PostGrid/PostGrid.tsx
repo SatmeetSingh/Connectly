@@ -1,13 +1,12 @@
 import React from 'react';
-import styles from './profile.module.css';
-import { Post } from '../../Pages/HomePage/PostInterface';
-import { ErrorObject } from '../../Pages/HomePage/HomeSlice';
+import styles from '../profile.module.css';
+import { Post } from '../../../Pages/HomePage/PostInterface';
 import { NavLink, useParams } from 'react-router-dom';
 
 interface ProfilePageProps {
   post: Post[];
   status: string;
-  error: null | ErrorObject;
+  error: null | string;
 }
 
 const PostGrid: React.FC<ProfilePageProps> = ({ post, status, error }) => {
@@ -19,7 +18,7 @@ const PostGrid: React.FC<ProfilePageProps> = ({ post, status, error }) => {
           {!userid ? (
             <>
               <p className=" font-semibold text-pretty text-center  text-sm">
-                {error?.message}
+                {error}
               </p>
               <p className=" font-semibold text-blue-700 text-center text-sm">
                 Create new post

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import { LiaHomeSolid } from 'react-icons/lia';
-import { IoMdNotificationsOutline } from 'react-icons/io';
+import { IoIosNotifications } from 'react-icons/io';
 import { TfiSearch } from 'react-icons/tfi';
 import { useEffect, useState } from 'react';
 import { CgProfile } from 'react-icons/cg';
@@ -39,60 +39,57 @@ export function LargeNavbar() {
         </div>
         <ul className={styles.menu}>
           <li>
-            <Link to="" className="flex gap-2">
-              <LiaHomeSolid size={25} />
-              <span>Home</span>
+            <Link to="" className="flex gap-3">
+              <LiaHomeSolid size={30} />
+              <span className={styles.largeNavText}>Home</span>
             </Link>
           </li>
           <li>
-            <Link to="popular" className="flex gap-2">
-              <TfiSearch size={25} />
-              <span>Search</span>
+            <Link to="popular" className="flex gap-3">
+              <TfiSearch size={30} />
+              <span className={styles.largeNavText}>Search</span>
             </Link>
           </li>
           <li>
-            <a href="#Discover" className="flex gap-2">
-              <ImCompass2 size={25} />
-              <span>Discover</span>
+            <a href="#Discover" className="flex gap-3">
+              <ImCompass2 size={30} />
+              <span className={styles.largeNavText}>Discover</span>
             </a>
           </li>
           <li>
-            <a href="#Reels" className="flex gap-2">
-              <RxVideo size={25} />
-              <span>Reels</span>
+            <a href="#Reels" className="flex gap-3">
+              <RxVideo size={30} />
+              <span className={styles.largeNavText}>Reels</span>
             </a>
           </li>
           <li>
-            <a href="#Messages" className="flex gap-2">
-              <AiOutlineMessage size={25} />
-              <span>Messages</span>
+            <a href="#Messages" className="flex gap-3">
+              <AiOutlineMessage size={30} />
+              <span className={styles.largeNavText}>Messages</span>
             </a>
           </li>
           <li>
-            <Link
-              to="notification"
-              className="flex gap-2 items-center mb-[-10px] mt-[-10px] ml-[-3px]"
-            >
-              <IoMdNotificationsOutline size={45} />
-              <span>Notification</span>
+            <Link to="notification" className="flex gap-3">
+              <IoIosNotifications size={30} />
+              <span className={styles.largeNavText}>Notification</span>
             </Link>
           </li>
           <li>
-            <a href="#Create" className="flex gap-2">
-              <AiOutlineVideoCameraAdd size={25} />
-              <span>Create</span>
+            <a href="#Create" className="flex gap-3">
+              <AiOutlineVideoCameraAdd size={30} />
+              <span className={styles.largeNavText}>Create</span>
             </a>
           </li>
           <li>
-            <Link to="profile" className="flex gap-2">
-              <CgProfile size={25} />
-              <span>Profile</span>
+            <Link to="profile" className="flex gap-3">
+              <CgProfile size={30} />
+              <span className={styles.largeNavText}>Profile</span>
             </Link>
           </li>
           <li>
-            <a href="#More" className="flex gap-2">
-              <IoReorderThree size={25} />
-              <span>More</span>
+            <a href="#More" className="flex gap-3">
+              <IoReorderThree size={30} />
+              <span className={styles.largeNavText}>More</span>
             </a>
           </li>
         </ul>
@@ -108,7 +105,7 @@ export function SmallNavBar() {
         <ul className={styles.smallmenu}>
           <li>
             <Link to="">
-              <LiaHomeSolid size={30} />
+              <LiaHomeSolid size={29} />
             </Link>
           </li>
           <li>

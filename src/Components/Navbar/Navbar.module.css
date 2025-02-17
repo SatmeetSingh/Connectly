@@ -1,54 +1,46 @@
 .largenav {
-  width: auto;
-  height: auto;
-  padding: 20px 60px 30px 5px;
+  padding: 20px 60px 20px 10px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   background-color: rgba(255, 255, 255, 1);
+  border-right: 1px solid #dbdbdb;
+  box-sizing: border-box;
+  width: 250px;
+  height: 100%;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+}
+
+.largeNavText {
+  font-size: medium;
+  margin-top: 3px;
 }
 
 nav .navbar {
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
   height: 100%;
-  max-width: 90%;
-  /* background: #2980b9; */
   margin: auto;
 }
 
-nav .navbar .leftnavbar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  gap: 30px;
-}
-
-nav .navbar .rightnavbar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  gap: 30px;
-}
-
-nav .navbar .logo a {
-  /* color: #fff; */
+.largenav .navbar .logo a {
+  text-align: center;
+  padding: 20px 20px 10px 20px;
   font-size: 32px;
   font-weight: 600;
   text-decoration: none;
 }
-nav .navbar .menu {
+
+.largenav .navbar .menu {
   display: flex;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: 30px;
   gap: 20px;
 }
 .navbar .menu li {
   list-style: none;
-  margin: 0 15px;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
 }
 .navbar .menu li a {
   /* color: #fff; */
@@ -65,6 +57,11 @@ section {
   justify-content: center;
   color: #96c7e8;
   font-size: 70px;
+}
+@media (max-width: 1024px) {
+  .largenav {
+    width: 200px;
+  }
 }
 #Home {
   background: #fff;
@@ -127,12 +124,6 @@ section {
   align-items: center;
   justify-content: space-around;
   width: 100%;
-}
-
-.smallnav .navbar1 .leftnavbar .smallmenu li {
-  cursor: pointer;
-  list-style: none;
-  margin: 0 15px;
 }
 
 .box {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './SignUpForm.module.css';
 import { TextField, Button } from '@mui/material';
@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   setFormData,
   setIsShown,
-  setErrors,
   Data,
   createUser,
 } from '../../Pages/Auth/AuthSlice';
@@ -16,8 +15,11 @@ import { AppDispatch, RootState } from '../../store';
 function SignupForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const [errors, setErrors] = useState<{ field: string; message: string }[]>(
+    []
+  );
 
-  const { formData, isShown, errors, status } = useSelector(
+  const { formData, isShown, error, status } = useSelector(
     (state: RootState) => state.auth
   );
 
@@ -88,7 +90,7 @@ function SignupForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const errors = getErrors(formData);
-    dispatch(setErrors(errors));
+    setErrors(errors);
 
     try {
       if (errors.length === 0) {
@@ -112,11 +114,19 @@ function SignupForm() {
         }
       }
     } catch (error) {
+      dispatch(
+        setFormData({
+          username: '',
+          name: '',
+          email: '',
+          password: '',
+        })
+      );
       console.error('Error creating user:', error);
     }
   };
   const getErrorMessage = (field: string) =>
-    errors.find((error) => error.field === field)?.message;
+    errors.find((error: any) => error.field === field)?.message;
 
   return (
     <div className={styles.signuppage}>
@@ -209,9 +219,11 @@ function SignupForm() {
               loadingIndicator="Loading..."
               variant="contained"
               type="submit"
+              disabled={status === 'pending'}
             >
               Sign up
             </Button>
+            {status === 'failed' && <p style={{ color: 'red' }}>{error}</p>}
             <div>
               <p className="mt-[-20px]">
                 Already have an account?

@@ -1,28 +1,23 @@
 import React, { useEffect } from 'react';
 import ProfileNav from './ProfileNav';
 import styles from './profile.module.css';
-import PostGrid from './PostGrid';
-import Button from '@mui/material/Button';
 import CustomBorderIcon from '../../icons/CustomBorderIcon';
 import ReelsIcon from '../../icons/CustomReelsIcon';
 import SavedIcon from '../../icons/CustomSavedIcon';
-import { LuUserPlus } from 'react-icons/lu';
-import { Link } from 'react-router-dom';
 import ProfileHeader from './ProfileHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { fetchData, fetchPostsByUserId } from '../../Pages/HomePage/HomeSlice';
+import { fetchData } from '../../Pages/HomePage/HomeSlice';
+import Buttons from './Buttons';
+import { Link, Outlet } from 'react-router-dom';
 
 const Profile = () => {
   const dispatch = useDispatch<AppDispatch>();
   const userId = window.localStorage.getItem('userId');
-  const { userData, postData, status, error } = useSelector(
-    (state: RootState) => state.home
-  );
+  const { userData } = useSelector((state: RootState) => state.home);
 
   useEffect(() => {
     dispatch(fetchData({ url: '/users', userId: `${userId}` }));
-    dispatch(fetchPostsByUserId({ url: '/Posts/user', userId: `${userId}` }));
   }, [dispatch, userId]);
 
   return (
@@ -30,39 +25,32 @@ const Profile = () => {
       <ProfileNav username={userData.username} />
       <div className={styles.profileHeader}>
         <ProfileHeader user={userData} />
-        <p className={styles.bio}>{userData.bio}</p>
-        <div className="grid grid-flow-col w-[100%] gap-2 mt-3 ">
-          <Button variant="contained" size="small" className="col-span-10 ">
-            <Link to="editProfile" className="max-sm:text-[11px]">
-              Edit Profile
-            </Link>
-          </Button>
-          <Button variant="outlined" size="small" className="col-span-10 ">
-            <Link to="editProfile" className="max-sm:text-[11px]">
-              Share Profile
-            </Link>
-          </Button>
-          <Button variant="outlined" size="small" className="col-span-1 ">
-            <Link to="editProfile" className="max-sm:text-[11px]">
-              <LuUserPlus size={20} />
-            </Link>
-          </Button>
+        <p className={`${styles.bio} md:hidden`}>{userData.bio}</p>
+        <div className="md:hidden">
+          <Buttons />
         </div>
       </div>
-      <div className={styles.customicons}>
-        <div className={styles.cusIcon}>
-          <CustomBorderIcon />
+      <div className="mt-12 w-[100%]  border-[1px] border-black "></div>
+      <div className="w-[100%] place-items-center">
+        <div className={styles.customicons}>
+          <div className={`flex gap-2 opacity-70 ${styles.cusIcon}`}>
+            <Link to="user-post">
+              <CustomBorderIcon />
+            </Link>
+            <span className="max-md:hidden text-[18px] ">Posts</span>
+          </div>
+          <div className={`flex gap-2 opacity-70 ${styles.cusIcon}`}>
+            <ReelsIcon />
+            <span className="max-md:hidden text-[18px] ">Saved</span>
+          </div>
+          <div className={`flex gap-2 opacity-70 ${styles.cusIcon}`}>
+            <SavedIcon />
+            <span className="max-md:hidden text-[18px] ">Tagged</span>
+          </div>
         </div>
-        <div className={styles.cusIcon}>
-          <ReelsIcon />
-        </div>
-        <div className={`${styles.cusIcon} `}>
-          <SavedIcon />
-        </div>
-      </div>
-      {/* Posts Grid */}
-      <div className="border-t-[1px] py-[2px] border-black">
-        <PostGrid post={postData} status={status} error={error} />
+        {/* Posts Grid */}
+
+        <Outlet />
       </div>
     </div>
   );
