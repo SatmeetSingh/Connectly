@@ -11,8 +11,8 @@ const IconWithBorder = () => {
       {/* SVG with border */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="25"
-        height="25"
+        width="20"
+        height="20"
         viewBox="0 0 25 25"
         fill="none"
         stroke="currentColor"
@@ -32,8 +32,8 @@ const IconWithBorder = () => {
       </svg>
 
       {/* Icon placed over the SVG container */}
-      <div style={{ position: 'absolute', top: '4px', left: '2px' }}>
-        <LuUser size={20} />
+      <div style={{ position: 'absolute', top: '3px', left: '2px' }}>
+        <LuUser size={15} />
       </div>
     </div>
   );

@@ -1,26 +1,14 @@
-.home {
-  width: 100%;
+/* Auto Layout Horizontal */
+
+/* Auto layout */
+.story {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  overflow: hidden;
-  background-color: rgba(255, 228, 196, 0.3);
-  scrollbar-width: none;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
 }
 
-@media (max-width: 750px) {
-  .posts {
-    width: 100%;
-    place-items: center;
-    background-color: white;
-  }
-}
-
-@media (min-width: 750px) {
-  .posts {
-    height: 100%;
-    place-items: center;
-    background-color: white;
-    flex: 2;
-  }
-}
+/* Inside auto layout
+flex: none;
+order: 0;
+flex-grow: 0; */

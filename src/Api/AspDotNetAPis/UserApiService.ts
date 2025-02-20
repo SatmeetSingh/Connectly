@@ -1,7 +1,7 @@
 import axios from 'axios';
 import axiosInstance from '../AxiosInstance';
 import { Data, LoginData } from '../../Pages/Auth/AuthSlice';
-import { UpdatedData } from '../../Pages/AppLayout/layoutSlice';
+import { UpdatedFormData } from '../../Pages/AppLayout/layoutSlice';
 
 export const UserApiClient = {
   getById: async (url: string, userId: string | null, config = {}) => {
@@ -10,7 +10,6 @@ export const UserApiClient = {
       if (response.data === null) {
         localStorage.removeItem('userId');
         localStorage.removeItem('loggedIn');
-        // window.location.reload();
       }
       return response.data;
     } catch (error: unknown) {
@@ -101,7 +100,7 @@ export const UserApiClient = {
 
   updatePatch: async (
     url: string,
-    data: UpdatedData,
+    data: FormData | UpdatedFormData,
     userId: string | null,
     config = {}
   ) => {

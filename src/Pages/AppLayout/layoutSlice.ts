@@ -2,18 +2,24 @@ import { UserApiClient } from '../../Api/AspDotNetAPis/UserApiService';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosRequestConfig } from 'axios';
 
-export interface UpdatedData {
+export interface UpdatedFormData {
   Name?: string;
   username?: string;
   bio?: string;
   gender?: string;
   file?: File;
 }
+export interface UpdatedData {
+  name?: string;
+  username?: string;
+  bio?: string;
+  gender?: string;
+}
 
 interface UpdatedDataProp {
   url: string;
   userId: string | null;
-  data: UpdatedData;
+  data: FormData | UpdatedFormData;
   config?: AxiosRequestConfig;
 }
 
@@ -34,19 +40,18 @@ export const UpdateData = createAsyncThunk(
 export interface AppState {
   updateData: UpdatedData;
   status: string;
-  error: null | object;
+  layoutError: null | string;
 }
 
 export const initialState: AppState = {
   updateData: {
-    Name: '',
+    name: '',
     username: '',
     bio: '',
     gender: '',
-    file: undefined,
   },
   status: 'idle',
-  error: null,
+  layoutError: null,
 };
 
 const ApplayoutSlice = createSlice({
@@ -54,14 +59,14 @@ const ApplayoutSlice = createSlice({
   initialState,
   reducers: {
     setUpdateData(state, action) {
-      state.updateData = action.payload;
+      state.updateData = { ...state.updateData, ...action.payload };
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(UpdateData.pending, (state) => {
         state.status = 'loading';
-        state.error = null;
+        state.layoutError = null;
       })
       .addCase(UpdateData.fulfilled, (state, action) => {
         state.status = 'fulfilled';
@@ -73,7 +78,10 @@ const ApplayoutSlice = createSlice({
       })
       .addCase(UpdateData.rejected, (state, action) => {
         state.status = 'rejected';
-        state.error = action.payload || 'An error occurred';
+        state.layoutError =
+          typeof action.payload === 'string'
+            ? action.payload
+            : 'An error occurred';
       });
   },
 });

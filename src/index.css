@@ -2,9 +2,14 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-body {
+* {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100%;
+  font-family: Arial, sans-serif;
   -webkit-overflow-scrolling: touch;
 }

@@ -18,7 +18,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   formData: Data;
   loginData: LoginData;
-  errors: { field: string; message: string }[];
+  error: string | null;
   isShown: boolean;
   loading: boolean;
   status: string;
@@ -41,8 +41,8 @@ export const createUser = createAsyncThunk(
   async ({ url, data, config = {} }: PostDataArgs, { rejectWithValue }) => {
     try {
       return await UserApiClient.signupPost(url, data, config);
-    } catch (error) {
-      return rejectWithValue(error);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Signup failed');
     }
   }
 );
@@ -75,7 +75,7 @@ const initialState: AuthState = {
     Email: '',
     Password: '',
   },
-  errors: [],
+  error: null,
   status: 'idle',
   isShown: false,
   loading: false,
@@ -101,26 +101,40 @@ export const AuthSlice = createSlice({
       state.loading = action.payload;
     },
     setErrors: (state, action) => {
-      state.errors = action.payload;
+      state.error = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(createUser.pending, (state) => {
         state.status = 'pending';
-        state.errors = [];
+        state.error = null;
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.status = 'fulfilled';
         state.formData = action.payload;
       })
+      .addCase(createUser.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error =
+          typeof action.payload === 'string'
+            ? action.payload
+            : 'An unknown error occurred';
+      })
       .addCase(loginUser.pending, (state) => {
         state.status = 'pending';
-        state.errors = [];
+        state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = 'fulfilled';
         state.loginData = action.payload;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error =
+          typeof action.payload === 'string'
+            ? action.payload
+            : 'An unknown error occurred';
       });
   },
 });

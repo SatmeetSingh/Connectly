@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './loginForm.module.css';
 import { FcGoogle } from 'react-icons/fc';
@@ -9,7 +9,6 @@ import {
   setLoginData,
   setIsShown,
   LoginData,
-  setErrors,
   loginUser,
 } from '../../Pages/Auth/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,8 +16,11 @@ import { AppDispatch, RootState } from '../../store';
 
 const LoginForm = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { errors, isShown, loginData, status } = useSelector(
+  const { error, isShown, loginData, status } = useSelector(
     (state: RootState) => state.auth
+  );
+  const [errors, setErrors] = useState<{ field: string; message: string }[]>(
+    []
   );
   const navigate = useNavigate();
 
@@ -72,7 +74,7 @@ const LoginForm = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const errors = getErrors(loginData);
-    dispatch(setErrors(errors));
+    setErrors(errors);
 
     try {
       if (errors.length === 0) {
@@ -107,7 +109,7 @@ const LoginForm = () => {
   };
 
   const getErrorMessage = (field: string) => {
-    return errors.find((error) => error.field === field)?.message;
+    return errors.find((error: any) => error.field === field)?.message;
   };
 
   return (
@@ -202,6 +204,7 @@ const LoginForm = () => {
             Login with Google
           </Button>
         </div>
+        {status === 'failed' && <p style={{ color: 'red' }}>{error}</p>}
       </div>
     </div>
   );

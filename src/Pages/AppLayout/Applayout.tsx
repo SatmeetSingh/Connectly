@@ -6,9 +6,16 @@ export default function AppLayout() {
   const isLoggedIn = window.localStorage.getItem('loggedIn')?.toString();
 
   return (
-    <div className="h-[100%] min-[750px]:flex min-[750px]:gap-3">
-      <NavBar />
-      {isLoggedIn === 'true' ? <Outlet /> : <Navigate to="/" />}
+    <div className="flex flex-row h-[100vh]  ">
+      {/* Sidebar for larger screens, collapsible on small screens */}
+      <div className="md:flex-1 p-0 ">
+        <NavBar />
+      </div>
+
+      {/* Main Content Area */}
+      <div className="md:flex-4 w-[100%]">
+        {isLoggedIn === 'true' ? <Outlet /> : <Navigate to="/" />}
+      </div>
     </div>
   );
 }

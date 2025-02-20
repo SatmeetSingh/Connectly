@@ -4,8 +4,12 @@ export const PROTECTED_ROUTES = {
   SearchPage: 'search',
   OtherUserProfile: 'search/:userid',
   OtherUserPosts: 'search/:userid/posts',
-  Profile: 'profile',
   UserPosts: 'profile/posts',
   EditProfile: 'profile/EditProfile',
   Settings: 'profile/settings',
+  CreatePost: 'create-post',
+};
+
+export const NestedRoute = {
+  userPostsGrid: 'user-post',
 };

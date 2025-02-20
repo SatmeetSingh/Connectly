@@ -12,14 +12,17 @@ const ProtectedRoute = lazy(
 // import { RotateLeft } from '@mui/icons-material';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoutePath } from './RoutePath/routes';
+import UserPostsGrid from '../Components/Profile/PostGrid/UserPostsGrid';
+import SavedPost from '../Components/Profile/PostGrid/SavedPost';
+import TaggedPosts from '../Components/Profile/PostGrid/TaggedPosts';
+const Profile = lazy(() => import('../Components/Profile/Profile'));
 
 export default function AppRoutes() {
   const isLoggedIn = window.localStorage.getItem('loggedIn');
   const userId = window.localStorage.getItem('userId');
 
-  console.log(typeof isLoggedIn);
   return (
-    <div className="h-[100%] min-[750px]:flex min-[750px]:gap-3">
+    <div className="h-[100%] ">
       <BrowserRouter>
         <Suspense fallback={<SuspenseLoading />}>
           <Routes>
@@ -49,6 +52,11 @@ export default function AppRoutes() {
                     element={route.element}
                   />
                 ))}
+                <Route path="profile" element={<Profile />}>
+                  <Route index element={<UserPostsGrid />} />
+                  <Route path="saved" element={<SavedPost />} />
+                  <Route path="tagged" element={<TaggedPosts />} />
+                </Route>
               </Route>
             </Route>
 
