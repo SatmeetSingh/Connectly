@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import styles from './profile.module.css';
 import { FaPlus } from 'react-icons/fa6';
 import { User } from './UserInterface';
@@ -19,7 +19,7 @@ interface ProfilePageProps {
 }
 
 const ProfileHeader: React.FC<ProfilePageProps> = ({ user }) => {
-  const userId = localStorage.getItem('userId');
+  const userId = useMemo(() => localStorage.getItem('userId'), []);
   const { userid } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { isLoading, isFollowing, followingData } = useSelector(
@@ -34,7 +34,7 @@ const ProfileHeader: React.FC<ProfilePageProps> = ({ user }) => {
     }
   }, [dispatch, userid, userId]);
 
-  const handleFollow = async () => {
+  const handleFollow = useCallback(async () => {
     try {
       await dispatch(
         followUser({ followerId: `${userId}`, followingId: user.id })
@@ -42,25 +42,25 @@ const ProfileHeader: React.FC<ProfilePageProps> = ({ user }) => {
     } catch (error) {
       console.error('Follow failed', error);
     }
-  };
+  }, [dispatch, userId, user.id]);
 
-  const handleUnFollow = async () => {
+  const handleUnFollow = useCallback(async () => {
     try {
       await dispatch(
         UnfollowUser({ followerId: `${userId}`, followingId: user.id })
       ).unwrap();
     } catch (error) {
-      console.error('Follow failed', error);
+      console.error('Unfollow failed', error);
     }
-  };
+  }, [dispatch, userId, user.id]);
 
-  const handleFollowering = async () => {
+  const handleFollowering = useCallback(async () => {
     try {
       await dispatch(fetchFollowing({ userId: user.id }));
     } catch (error) {
       console.error('Follow failed', error);
     }
-  };
+  }, [dispatch, user.id]);
   console.log(followingData);
   return (
     <div className={styles.fix}>
@@ -144,4 +144,4 @@ export const StorySection: React.FC<ProfilePageProps> = ({ user }) => {
   );
 };
 
-export default ProfileHeader;
+export default React.memo(ProfileHeader);
