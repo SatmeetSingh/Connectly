@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import ProfileNav from '../ProfileNav';
 import styles from '../profile.module.css';
 import PostGrid from '../PostGrid/PostGrid';
@@ -15,34 +15,39 @@ import {
 import { OtherUserButtons } from '../Buttons';
 import { Link, useParams } from 'react-router-dom';
 import {
-  fetchFollowing,
   fetchFollowStatus,
   followUser,
   UnfollowUser,
 } from '../../../Pages/HomePage/FollowSlice';
 
 const OtherUserProfile = () => {
-  const userId = localStorage.getItem('userId');
+  const userId = useMemo(() => localStorage.getItem('userId'), []);
   const { userid } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { userData, postData, status, error } = useSelector(
     (state: RootState) => state.home
   );
-  const { isLoading, isFollowing, followingData } = useSelector(
+  const { isLoading, isFollowing } = useSelector(
     (state: RootState) => state.follow
   );
 
   useEffect(() => {
-    dispatch(fetchData({ url: '/users', userId: `${userid}` }));
-    dispatch(fetchPostsByUserId({ url: '/Posts/user', userId: `${userid}` }));
-    dispatch(
-      fetchFollowStatus({ followerId: `${userId}`, followingId: `${userid}` })
-    );
-    dispatch(fetchFollowing({ userId: `${userid}` }));
+    if (userid) {
+      dispatch(fetchData({ url: '/users', userId: `${userid}` }));
+      dispatch(
+        fetchFollowStatus({ followerId: `${userId}`, followingId: `${userid}` })
+      );
+    }
   }, [dispatch, userid, userId, isFollowing]);
-  console.log(followingData);
 
-  const handleFollow = async () => {
+  useEffect(() => {
+    if (userid) {
+      dispatch(fetchPostsByUserId({ url: '/Posts/user', userId: `${userid}` }));
+    }
+  }, [dispatch, userid]);
+
+  // Memoized follow/unfollow handlers to prevent unnecessary re-creations
+  const handleFollow = useCallback(async () => {
     try {
       await dispatch(
         followUser({ followerId: `${userId}`, followingId: `${userid}` })
@@ -50,17 +55,17 @@ const OtherUserProfile = () => {
     } catch (error) {
       console.error('Follow failed', error);
     }
-  };
+  }, [dispatch, userId, userid]);
 
-  const handleUnFollow = async () => {
+  const handleUnFollow = useCallback(async () => {
     try {
       await dispatch(
         UnfollowUser({ followerId: `${userId}`, followingId: `${userid}` })
       ).unwrap();
     } catch (error) {
-      console.error('Follow failed', error);
+      console.error('Unfollow failed', error);
     }
-  };
+  }, [dispatch, userId, userid]);
 
   return (
     <div className={styles.profilePage}>
@@ -101,4 +106,4 @@ const OtherUserProfile = () => {
   );
 };
 
-export default OtherUserProfile;
+export default React.memo(OtherUserProfile);

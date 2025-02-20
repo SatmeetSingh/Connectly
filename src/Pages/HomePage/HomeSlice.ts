@@ -114,6 +114,8 @@ export interface HomeState {
   RemoveLikeData: { userId: string; postId: string };
   status: string;
   count: number;
+  userError: null | string;
+  postError: null | string;
   error: null | string;
 }
 
@@ -124,6 +126,8 @@ const initialState: HomeState = {
   RemoveLikeData: { userId: '', postId: '' },
   status: 'idle',
   count: 0,
+  userError: null,
+  postError: null,
   error: null,
 };
 
@@ -135,7 +139,7 @@ const HomeSlice = createSlice({
     builder
       .addCase(fetchData.pending, (state) => {
         state.status = 'loading';
-        state.error = null;
+        state.userError = null;
       })
       .addCase(fetchData.fulfilled, (state, action) => {
         state.status = 'fulfilled';
@@ -143,14 +147,14 @@ const HomeSlice = createSlice({
       })
       .addCase(fetchData.rejected, (state, action) => {
         state.status = 'failed';
-        state.error =
+        state.userError =
           typeof action.payload === 'string'
             ? action.payload
             : 'An error occurred';
       })
       .addCase(fetchPostsByUserId.pending, (state) => {
         state.status = 'loading';
-        state.error = null;
+        state.postError = null;
       })
       .addCase(fetchPostsByUserId.fulfilled, (state, action) => {
         state.status = 'fulfilled';
@@ -158,7 +162,7 @@ const HomeSlice = createSlice({
       })
       .addCase(fetchPostsByUserId.rejected, (state, action) => {
         state.status = 'failed';
-        state.error =
+        state.postError =
           typeof action.payload === 'string'
             ? action.payload
             : 'An error occurred';
