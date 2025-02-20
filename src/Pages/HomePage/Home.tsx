@@ -2,26 +2,27 @@
 import { AboveNavBar } from '../../Components/Navbar/Navbar';
 import styles from './Home.module.css';
 import { useParams } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { StorySection } from '../../Components/Profile/ProfileHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { fetchData } from './HomeSlice';
+import PostSkeleton from '../../utils/LazyLoading/PostSkeleton/PostSkeleton';
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
   const { userData } = useSelector((state: RootState) => state.home);
   const { userId } = useParams();
 
-  // const LazyLoad = () => {
-  //   return (
-  //     <>
-  //       <PostSkeleton />
-  //       <PostSkeleton />
-  //       <PostSkeleton />
-  //     </>
-  //   );
-  // };
+  const LazyLoad = () => {
+    return (
+      <>
+        <PostSkeleton />
+        <PostSkeleton />
+        <PostSkeleton />
+      </>
+    );
+  };
 
   useEffect(() => {
     dispatch(fetchData({ url: '/users', userId: `${userId}` }));
@@ -40,11 +41,11 @@ export default function Home() {
       </div>
 
       <div className={styles.posts}>
-        {/* <Suspense fallback={<LazyLoad />}>
+        <Suspense fallback={<LazyLoad />}>
+          {/* <Post />
           <Post />
-          <Post />
-          <Post />
-        </Suspense> */}
+          <Post /> */}
+        </Suspense>
       </div>
     </div>
   );

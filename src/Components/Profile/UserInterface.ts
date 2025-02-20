@@ -9,6 +9,7 @@ export interface User {
   gender: string;
   followersCount: number;
   followingCount: number;
+  postCount: number;
   isActive: boolean;
   posts: any[];
   comments: any[];
@@ -28,6 +29,7 @@ export const userdata = {
   gender: '',
   followersCount: 0,
   followingCount: 0,
+  postCount: 0,
   isActive: true,
   posts: [],
   comments: [],

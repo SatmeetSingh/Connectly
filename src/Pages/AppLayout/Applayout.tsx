@@ -6,7 +6,7 @@ export default function AppLayout() {
   const isLoggedIn = window.localStorage.getItem('loggedIn')?.toString();
 
   return (
-    <div className="flex flex-row h-[100vh] overflow-hidden ">
+    <div className="flex flex-row h-[100vh]  ">
       {/* Sidebar for larger screens, collapsible on small screens */}
       <div className="md:flex-1 p-0 ">
         <NavBar />

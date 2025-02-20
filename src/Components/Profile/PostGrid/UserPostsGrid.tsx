@@ -12,7 +12,9 @@ export default function UserPostsGrid() {
   );
 
   useEffect(() => {
-    dispatch(fetchPostsByUserId({ url: '/Posts/user', userId: `${userId}` }));
+    if (userId) {
+      dispatch(fetchPostsByUserId({ url: '/Posts/user', userId: `${userId}` }));
+    }
   }, [dispatch, userId]);
 
   return (

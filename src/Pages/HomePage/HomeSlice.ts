@@ -107,10 +107,6 @@ export const RemoveLikeFromPost = createAsyncThunk(
   }
 );
 
-// export interface ErrorObject {
-//   [key: string]: any;
-// }
-
 export interface HomeState {
   userData: User;
   postData: Post[];

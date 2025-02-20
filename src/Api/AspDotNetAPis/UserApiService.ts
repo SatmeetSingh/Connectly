@@ -10,7 +10,6 @@ export const UserApiClient = {
       if (response.data === null) {
         localStorage.removeItem('userId');
         localStorage.removeItem('loggedIn');
-        // window.location.reload();
       }
       return response.data;
     } catch (error: unknown) {

@@ -12,6 +12,7 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 30px;
+  height: screen;
 }
 
 .profilenav {
@@ -19,6 +20,7 @@
 }
 
 .profileHeader {
+  width: 100%;
   display: flex;
   align-items: center;
   padding: 20px;
@@ -52,33 +54,48 @@
 .fix {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  width: 90%;
-  gap: 50px;
+  width: 100%;
 }
 
 .profileInfo {
-  text-align: center;
-  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
 }
 
 .username {
-  font-size: 24px;
-  font-weight: bold;
-  margin-top: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 5px;
 }
 
 .stats {
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
   font-size: 20px;
+  gap: 50px;
 }
 
 .stats span {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.addPhoto {
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(41, 41, 202);
+  border-radius: 50%;
+  border: 2px solid white;
+  position: absolute;
+  right: 15%;
+  bottom: 10%;
 }
 
 @media (max-width: 768px) {
@@ -140,7 +157,7 @@
     border-radius: 50%;
     border: 2px solid white;
     position: absolute;
-    right: 17%;
+    right: 15%;
     bottom: 10%;
   }
 

@@ -2,88 +2,99 @@ import React, { useEffect } from 'react';
 import ProfileNav from '../ProfileNav';
 import styles from '../profile.module.css';
 import PostGrid from '../PostGrid/PostGrid';
-import Button from '@mui/material/Button';
 import CustomBorderIcon from '../../../icons/CustomBorderIcon';
 import ReelsIcon from '../../../icons/CustomReelsIcon';
 import SavedIcon from '../../../icons/CustomSavedIcon';
-import { LuUserPlus } from 'react-icons/lu';
-import { Link, useParams } from 'react-router-dom';
-import { StorySection } from '../ProfileHeader';
+import ProfileHeader from '../ProfileHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../store';
 import {
   fetchData,
   fetchPostsByUserId,
 } from '../../../Pages/HomePage/HomeSlice';
+import { OtherUserButtons } from '../Buttons';
+import { Link, useParams } from 'react-router-dom';
+import {
+  fetchFollowing,
+  fetchFollowStatus,
+  followUser,
+  UnfollowUser,
+} from '../../../Pages/HomePage/FollowSlice';
 
 const OtherUserProfile = () => {
+  const userId = localStorage.getItem('userId');
   const { userid } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { userData, postData, status, error } = useSelector(
     (state: RootState) => state.home
   );
+  const { isLoading, isFollowing, followingData } = useSelector(
+    (state: RootState) => state.follow
+  );
+
   useEffect(() => {
     dispatch(fetchData({ url: '/users', userId: `${userid}` }));
     dispatch(fetchPostsByUserId({ url: '/Posts/user', userId: `${userid}` }));
-  }, [dispatch, userid]);
+    dispatch(
+      fetchFollowStatus({ followerId: `${userId}`, followingId: `${userid}` })
+    );
+    dispatch(fetchFollowing({ userId: `${userid}` }));
+  }, [dispatch, userid, userId, isFollowing]);
+  console.log(followingData);
+
+  const handleFollow = async () => {
+    try {
+      await dispatch(
+        followUser({ followerId: `${userId}`, followingId: `${userid}` })
+      ).unwrap();
+    } catch (error) {
+      console.error('Follow failed', error);
+    }
+  };
+
+  const handleUnFollow = async () => {
+    try {
+      await dispatch(
+        UnfollowUser({ followerId: `${userId}`, followingId: `${userid}` })
+      ).unwrap();
+    } catch (error) {
+      console.error('Follow failed', error);
+    }
+  };
 
   return (
     <div className={styles.profilePage}>
       <ProfileNav username={userData.username} />
       <div className={styles.profileHeader}>
-        <div className={styles.fix}>
-          <div className="flex flex-col self-center">
-            <StorySection user={userData} />
-          </div>
-
-          <div className={styles.profileInfo}>
-            <div className={styles.stats}>
-              <span>
-                {userData.posts?.length} <p>posts</p>
-              </span>
-              <span>
-                {userData.followersCount}
-                <p>followers</p>
-              </span>
-              <span>
-                {userData.followingCount}
-                <p>following</p>
-              </span>
-            </div>
-          </div>
-        </div>
-        <p className={styles.bio}>{userData.bio}</p>
-        <div className="grid grid-flow-col w-[100%] gap-2 mt-3 ">
-          <Button
-            variant="contained"
-            size="small"
-            className="col-span-10 max-sm:text-[11px]"
-          >
-            Follow
-          </Button>
-          <Button variant="outlined" size="small" className="col-span-10 ">
-            Share Profile
-          </Button>
-          <Button variant="outlined" size="small" className="col-span-1 ">
-            <Link to="editProfile" className="max-sm:text-[11px]">
-              <LuUserPlus size={20} />
-            </Link>
-          </Button>
+        <ProfileHeader user={userData} />
+        <p className={`${styles.bio} md:hidden`}>{userData.bio}</p>
+        <div className="md:hidden">
+          <OtherUserButtons
+            isLoading={isLoading}
+            isSuccess={isFollowing}
+            handleFollow={handleFollow}
+            handleUnFollow={handleUnFollow}
+          />
         </div>
       </div>
+      <div className="w-[100%]  border-[1px] border-gray-200 "></div>
       <div className={styles.customicons}>
-        <div className={styles.cusIcon}>
+        <Link to="" className={`flex gap-2  opacity-70 ${styles.cusIcon}`}>
           <CustomBorderIcon />
-        </div>
-        <div className={styles.cusIcon}>
+          <span className="max-md:hidden text-[15px] ">Posts</span>
+        </Link>
+
+        <Link to="saved" className={`flex gap-2 opacity-70 ${styles.cusIcon}`}>
           <ReelsIcon />
-        </div>
-        <div className={`${styles.cusIcon} `}>
+          <span className="max-md:hidden text-[15px] ">Saved</span>
+        </Link>
+        <Link to="tagged" className={`flex gap-2 opacity-70 ${styles.cusIcon}`}>
           <SavedIcon />
-        </div>
+          <span className="max-md:hidden text-[15px] ">Tagged</span>
+        </Link>
       </div>
       {/* Posts Grid */}
-      <div className="border-t-[1px] py-1 border-black">
+      <div>
         <PostGrid post={postData} status={status} error={error} />
       </div>
     </div>

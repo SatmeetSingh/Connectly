@@ -15,3 +15,5 @@ COPY . .
 
 # Build the frontend for production
 RUN npm run build
+
+CMD ["npm" ,"run" ,"dev"]
